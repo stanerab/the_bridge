@@ -1,5 +1,5 @@
 </div>
-<footer class="fixed-bottom bg-white border-top d-flex justify-content-around py-2">
+<footer class="fixed-bottom bg-white border-top d-flex justify-content-around py-9">
   <a href="home.php" class="text-muted text-center">
     <i class="bi bi-house-fill"></i><br>Home
   </a>
