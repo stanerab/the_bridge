@@ -1,6 +1,6 @@
 </div>
 <footer class="fixed-bottom bg-white border-top d-flex justify-content-around py-2">
-  <a href="dashboard.php" class="text-muted text-center">
+  <a href="home.php" class="text-muted text-center">
     <i class="bi bi-house-fill"></i><br>Home
   </a>
   <a href="toolkit.php" class="text-muted text-center">
