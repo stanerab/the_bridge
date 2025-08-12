@@ -7,10 +7,10 @@
     <p class="lead text-muted mb-4">Please choose how you’d like to continue:</p>
 
     <div class="d-grid gap-4 col-10 col-md-6 mx-auto">
-      <a href="dashboard.php" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+      <a href="home.php" class="btn btn-primary btn-lg rounded-pill shadow-sm">
         👤 I am an adult with ADHD
       </a>
-      <a href="dashboard.php" class="btn btn-outline-secondary btn-lg rounded-pill shadow-sm">
+      <a href="home.php" class="btn btn-outline-secondary btn-lg rounded-pill shadow-sm">
         👪 I am a Family Member
       </a>
     </div>

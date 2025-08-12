@@ -10,6 +10,32 @@
   <link rel="stylesheet" href="/css/style.css" />
 
   <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-color: #ffffff;
+    }
+  </style>
+  <script>
+    // Apply saved theme before page shows
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark-mode');
+    }
+  </script>
+
+
+
+  <style>
     body,
     html {
       margin: 0;

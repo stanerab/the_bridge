@@ -1,3 +1,4 @@
+<?php include("includes/header.php"); ?>
 <style>
     .small-img {
         max-width: 100%;
@@ -53,3 +54,4 @@
         </div>
     </div>
 </div>
+<?php include("includes/footer.php"); ?>

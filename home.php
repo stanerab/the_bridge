@@ -52,4 +52,29 @@
         </div>
     </div>
 </body>
+<label class="switch">
+    <input type="checkbox" id="themeToggle">
+    <span class="slider"></span>
+</label>
+
+<script>
+    const toggle = document.getElementById('themeToggle');
+    const body = document.documentElement;
+
+    // Set toggle state on load
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggle.checked = true;
+    }
+
+    toggle.addEventListener('change', function () {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+</script>
+
 <?php include("includes/footer.php"); ?>
