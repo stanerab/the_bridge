@@ -92,41 +92,40 @@
 
 <body>
   <ul>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact us</a></li>
-    <li>
-      Dark / Light mode
-      <label class="switch">
-        <input type="checkbox" id="themeToggle">
-        <span class="slider"></span>
-      </label>
+    <li><a href="About.php">About</a></li>
+    <li><a href="Contact.php">Contact us</a></li>
     </li>
-    <li><a href="#">Font size change</a></li>
-  </ul>
+    <!-- Menu Page Content -->
+    <ul class="menu-list">
+      <li>
+        <button id="fontToggle" class="btn btn-secondary">Change font size</button>
+      </li>
+      <!-- Other menu items -->
+    </ul>
 
-  <script>
-    const toggle = document.getElementById('themeToggle');
-    const body = document.body;
-    const html = document.documentElement;
+    <script>
+      const toggle = document.getElementById('themeToggle');
+      const body = document.body;
+      const html = document.documentElement;
 
-    // Load saved theme
-    if (localStorage.getItem('theme') === 'dark') {
-      body.classList.add('dark-mode');
-      html.classList.add('dark-mode');
-      toggle.checked = true;
-    }
-
-    // Toggle theme
-    toggle.addEventListener('change', function () {
-      body.classList.toggle('dark-mode');
-      html.classList.toggle('dark-mode');
-      if (body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark');
-      } else {
-        localStorage.setItem('theme', 'light');
+      // Load saved theme
+      if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        html.classList.add('dark-mode');
+        toggle.checked = true;
       }
-    });
-  </script>
+
+      // Toggle theme
+      toggle.addEventListener('change', function () {
+        body.classList.toggle('dark-mode');
+        html.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+          localStorage.setItem('theme', 'dark');
+        } else {
+          localStorage.setItem('theme', 'light');
+        }
+      });
+    </script>
 
 </body>
 

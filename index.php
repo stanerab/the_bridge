@@ -1,11 +1,13 @@
 <?php include("includes/header.php"); ?>
 
-<!-- Particles Background (ONLY on this page) -->
-<div id="particles-js"></div>
+<!-- Particles Background (only below navbar) -->
+<div id="particles-container">
+  <div id="particles-js"></div>
+</div>
 
 <!-- Main Hero Section -->
-<div
-  style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; color: black; text-align: center; position: relative; z-index: 1;">
+<div class="hero-content"
+  style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: calc(100vh - var(--navbar-height)); color: black; text-align: center; position: relative; z-index: 1;">
 
   <img src="images/ADHD_bridge_logo.svg" alt="bridge" aria-labelledby="header-logo" loading="eager" decoding="async"
     class="rounded" style="color:transparent; max-width: 250px; height: auto; filter: contrast(1.2) brightness(1.1);" />
@@ -19,23 +21,23 @@
   </a>
 </div>
 
-<!-- Particles.js CDN and Config (ONLY on index.php) -->
+<!-- Particles.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
   particlesJS("particles-js", {
     particles: {
       number: { value: 60, density: { enable: true, value_area: 800 } },
-      color: { value: "#333333" },  // Dark gray instead of white
+      color: { value: "#333333" },
       shape: {
         type: "circle",
         stroke: { width: 0, color: "#000000" }
       },
-      opacity: { value: 0.8, random: false },  // More opaque
+      opacity: { value: 0.8, random: false },
       size: { value: 3, random: true },
       line_linked: {
         enable: true,
         distance: 150,
-        color: "#444444",  // Dark gray lines for visibility
+        color: "#444444",
         opacity: 0.6,
         width: 1
       },
@@ -61,15 +63,37 @@
   });
 </script>
 
-<!-- Particles CSS -->
+<!-- CSS -->
 <style>
-  #particles-js {
+  /* Detect navbar height dynamically */
+  :root {
+    --navbar-height: 70px;
+    /* default fallback */
+  }
+
+  nav.navbar {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Container for particles below navbar */
+  #particles-container {
     position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    width: 100%;
+    height: calc(100% - var(--navbar-height));
+    z-index: 0;
+  }
+
+  #particles-js {
     width: 100%;
     height: 100%;
-    z-index: 0;
-    top: 0;
-    left: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
   }
 
   body,
@@ -77,8 +101,17 @@
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow-x: hidden;
     background-color: #ffffff;
-    /* Pure white background */
   }
 </style>
+
+<!-- JS to auto-detect navbar height -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const navbar = document.querySelector("nav.navbar");
+    if (navbar) {
+      const navHeight = navbar.offsetHeight + "px";
+      document.documentElement.style.setProperty("--navbar-height", navHeight);
+    }
+  });
+</script>
