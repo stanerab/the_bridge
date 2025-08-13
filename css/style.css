@@ -2,7 +2,6 @@ body { font-family: 'Segoe UI', sans-serif; }
 footer a { font-size: 24px; color: #333; text-decoration: none; }
 footer a:hover { color: #007bff; }
 
-
 :root {
   --base-font-size: 16px; /* Default font size */
 }
@@ -10,10 +9,13 @@ footer a:hover { color: #007bff; }
 body {
   font-family: 'Segoe UI', sans-serif;
   font-size: var(--base-font-size);
-  transition: font-size 0.3s ease; /* Smooth font change */
+  transition: font-size 0.3s ease;
 }
 
-/* Optional scaling for headings */
-h1 { font-size: calc(var(--base-font-size) * 2); transition: font-size 0.3s ease; }
-h2 { font-size: calc(var(--base-font-size) * 1.5); transition: font-size 0.3s ease; }
-p, a, li { font-size: var(--base-font-size); transition: font-size 0.3s ease; }
+h1 { font-size: calc(var(--base-font-size) * 2); }
+h2 { font-size: calc(var(--base-font-size) * 1.5); }
+p, a, li { font-size: var(--base-font-size); }
+
+footer a { font-size: calc(var(--base-font-size) * 1.5); }
+
+footer a:hover { color: #007bff; }
