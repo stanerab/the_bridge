@@ -1,21 +1,29 @@
-// main.js
-document.addEventListener("DOMContentLoaded", function() {
-  // Apply stored font size on page load
-  const storedSize = localStorage.getItem("fontSize");
-  if (storedSize) {
-    document.documentElement.style.setProperty("--base-font-size", storedSize + "px");
-  }
+document.getElementById('fontToggle').addEventListener('click', function() {
+    // Get the root html element
+    const htmlElement = document.documentElement;
+    
+    // Get current font size or set default if not set
+    let currentSize = parseFloat(getComputedStyle(htmlElement).fontSize) || 16;
+    
+    // Define size options (in pixels)
+    const sizeOptions = [16, 18, 20]; // You can adjust these values
+    
+    // Find next size or cycle back to first
+    const currentIndex = sizeOptions.indexOf(currentSize);
+    const nextIndex = (currentIndex + 1) % sizeOptions.length;
+    const newSize = sizeOptions[nextIndex];
+    
+    // Apply new font size
+    htmlElement.style.fontSize = newSize + 'px';
+    
+    // Store preference in localStorage
+    localStorage.setItem('preferredFontSize', newSize);
+});
 
-  const fontToggleBtn = document.getElementById("fontToggle");
-
-  // Only run if button exists (menu page)
-  if (fontToggleBtn) {
-    fontToggleBtn.addEventListener("click", () => {
-      let currentSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--base-font-size"));
-      let newSize = currentSize + 2;
-      if (newSize > 24) newSize = 16; // Reset after 24px
-      document.documentElement.style.setProperty("--base-font-size", newSize + "px");
-      localStorage.setItem("fontSize", newSize);
-    });
-  }
+// Check for saved preference on page load
+window.addEventListener('DOMContentLoaded', function() {
+    const savedSize = localStorage.getItem('preferredFontSize');
+    if (savedSize) {
+        document.documentElement.style.fontSize = savedSize + 'px';
+    }
 });

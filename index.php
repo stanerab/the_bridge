@@ -1,5 +1,3 @@
-<?php include("includes/header.php"); ?>
-
 <!-- Particles Background (only below navbar) -->
 <div id="particles-container">
   <div id="particles-js"></div>
@@ -15,7 +13,7 @@
   <h1 style="margin-top: 24px; color: black; font-family: 'Segoe UI', sans-serif;">
   </h1>
 
-  <a href="login.php"
+  <a href="choose_role.php"
     style="margin-top: 32px; padding: 12px 40px; background-color: #6f42c1; color: white; font-size: 18px; text-decoration: none; border: none; border-radius: 8px; display: inline-block;">
     Get Started →
   </a>
