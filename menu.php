@@ -1,9 +1,9 @@
 <?php include("includes/header.php"); ?>
-<div class="container py-4"> <!-- Added vertical padding -->
-  <div class="col-md-8 mx-auto"> <!-- Centered column for better focus -->
-    <h1 class="display-5 fw-bold mb-4 text-primary">Menu</h1> <!-- More prominent heading -->
+<div class="container py-4">
+  <div class="col-md-8 mx-auto">
+    <h1 class="display-5 fw-bold mb-4 text-primary">Menu</h1>
 
-    <div class="card shadow-sm border-0"> <!-- Card for containment -->
+    <div class="card shadow-sm border-0">
       <div class="card-body p-4">
         <ul class="list-group list-group-flush">
           <li class="list-group-item border-0 py-3">
@@ -26,4 +26,9 @@
     </div>
   </div>
 </div>
+
+
+<li><a href="track_mood.php">Track Mood</a></li>
+<li><a href="view_moods.php">View Mood History</a></li>
+
 <?php include("includes/footer.php"); ?>

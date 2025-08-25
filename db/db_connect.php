@@ -1,13 +1,14 @@
 <?php
+// Database connection
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "adhd_user";      // your new user
+$password = "mypassword";      // the password you set
 $dbname = "login";
 
-$mysqli = new mysqli('localhost', 'root', '', 'login');
+$mysqli = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
 }
 ?>
