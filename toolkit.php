@@ -1,4 +1,4 @@
-<?php include("includes/header.php"); ?>
+<?php include("header.php"); ?>
 
 <div class="container mt-5">
   <h2 class="text-center mb-4">How are you feeling today?</h2>
@@ -59,4 +59,4 @@
   });
 </script>
 
-<?php include("includes/footer.php"); ?>
+<?php include("footer.php"); ?>

@@ -1,4 +1,4 @@
-<?php include_once('../connection.php'); ?>
+<?php include_once('connection.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +30,7 @@
     html.dark-mode {
       --bg-color: #121212;
       --text-color: #ffffff;
+      --box-color: #27ae60;
       background-color: #121212 !important;
       color: #ffffff !important;
     }
@@ -151,6 +152,3 @@
       }
     });
   </script>
-</body>
-
-</html>

@@ -1,4 +1,4 @@
-<?php include("includes/header.php"); ?>
+<?php include("header.php"); ?>
 <div class="container py-4">
   <div class="col-md-8 mx-auto">
     <h1 class="display-5 fw-bold mb-4 text-primary">Menu</h1>
@@ -31,4 +31,4 @@
 <li><a href="track_mood.php">Track Mood</a></li>
 <li><a href="view_moods.php">View Mood History</a></li>
 
-<?php include("includes/footer.php"); ?>
+<?php include("footer.php"); ?>
