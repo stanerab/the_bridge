@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("includes/header.php");
+include("header.php");
 ?>
 
 <body>
@@ -36,4 +36,4 @@ include("includes/header.php");
         </div>
     </div>
 
-    <?php include("includes/footer.php"); ?>
+    <?php include("footer.php"); ?>

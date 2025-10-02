@@ -1,4 +1,4 @@
-<?php include("includes/header.php"); ?>
+<?php include("header.php"); ?>
 
 <!-- Welcome Section -->
 <section class="text-center py-5 bg-light min-vh-100 d-flex flex-column justify-content-center">
