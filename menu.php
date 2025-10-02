@@ -28,7 +28,7 @@
 </div>
 
 
-<li><a href="track_mood.php">Track Mood</a></li>
-<li><a href="view_moods.php">View Mood History</a></li>
+<!-- <li><a href="track_mood.php">Track Mood</a></li> -->
+<!-- <li><a href="view_moods.php">View Mood History</a></li> -->
 
 <?php include("footer.php"); ?>

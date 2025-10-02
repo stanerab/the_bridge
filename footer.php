@@ -5,7 +5,7 @@
   <a href="toolkit.php" class="text-muted text-center">
     <i class="bi bi-people"></i><br>Toolkit
   </a>
-  <a href="messages.php" class="text-muted text-center">
+  <a href="chat.php" class="text-muted text-center">
     <i class="bi bi-chat-dots"></i><br>Chat
   </a>
   <a href="menu.php" class="text-muted text-center">
