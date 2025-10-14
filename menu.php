@@ -15,6 +15,10 @@
             <a href="Contact.php" class="text-decoration-none fs-5 d-flex align-items-center">
               <i class="bi bi-envelope me-3"></i> Contact Us
             </a>
+          <li class="list-group-item border-0 py-3">
+            <a href="logout.php" class="text-decoration-none fs-5 d-flex align-items-center">
+              <i class="bi bi-box-arrow-right me-3"></i> Log Out
+            </a>
           </li>
           <li class="list-group-item border-0 py-3">
             <button id="fontToggle" class="btn btn-outline-primary w-100 py-2">

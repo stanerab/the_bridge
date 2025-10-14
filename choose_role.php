@@ -1,3 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php"); // redirect if not logged in
+  exit;
+}
+?>
+<!-- Your choose role page HTML below -->
+
+
 <?php include("header.php"); ?>
 
 <!-- Welcome Section -->
@@ -12,6 +22,7 @@
       </a>
       <a href="home.php" class="btn btn-outline-secondary btn-lg rounded-pill shadow-sm">
         👪 I am a Family Member
+        <a href="logout.php">Logout</a>
       </a>
     </div>
   </div>
