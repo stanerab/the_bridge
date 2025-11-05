@@ -15,24 +15,26 @@
             <a href="Contact.php" class="text-decoration-none fs-5 d-flex align-items-center">
               <i class="bi bi-envelope me-3"></i> Contact Us
             </a>
+          </li>
           <li class="list-group-item border-0 py-3">
             <a href="logout.php" class="text-decoration-none fs-5 d-flex align-items-center">
               <i class="bi bi-box-arrow-right me-3"></i> Log Out
             </a>
           </li>
-          <li class="list-group-item border-0 py-3">
-            <button id="fontToggle" class="btn btn-outline-primary w-100 py-2">
-              <i class="bi bi-fonts me-2"></i> Click To Change Font Size
-            </button>
-          </li>
         </ul>
+
+        <button id="fontToggle" class="btn btn-outline-primary w-100 py-2 mt-3">
+          <i class="bi bi-fonts me-2"></i> Click To Change Font Size
+        </button>
+
       </div>
     </div>
   </div>
 </div>
 
+<script src="./js/font-resizer.js?v=<?php echo time(); ?>"></script>
 
-<!-- <li><a href="track_mood.php">Track Mood</a></li> -->
-<!-- <li><a href="view_moods.php">View Mood History</a></li> -->
+
+
 
 <?php include("footer.php"); ?>

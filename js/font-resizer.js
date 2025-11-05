@@ -1,31 +1,35 @@
 console.log("Font resizer script loaded!");
-// Single source of truth for font sizes
-const FONT_SIZES = [16, 18, 20];
+
+// Available font sizes
+const FONT_SIZES = [16, 18, 20]; 
 const STORAGE_KEY = 'appFontSize';
 
+// Apply font size to the root element (html)
 function applyFontSize(size) {
     document.documentElement.style.fontSize = `${size}px`;
 }
 
+// Get the next font size in the array
 function getNextSize(currentSize) {
-    const currentIndex = FONT_SIZES.indexOf(currentSize);
-    const nextIndex = (currentIndex + 1) % FONT_SIZES.length;
-    return FONT_SIZES[nextIndex];
+    const index = FONT_SIZES.indexOf(currentSize);
+    return FONT_SIZES[(index + 1) % FONT_SIZES.length];
 }
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
-    // Apply saved size
-    const savedSize = parseInt(localStorage.getItem(STORAGE_KEY)) || FONT_SIZES[0];
+    // Initialize saved size or default
+    let savedSize = parseInt(localStorage.getItem(STORAGE_KEY));
+    if (!savedSize || !FONT_SIZES.includes(savedSize)) savedSize = FONT_SIZES[0];
     applyFontSize(savedSize);
 
-    // Setup event listener
-    document.body.addEventListener('click', (e) => {
-        if (e.target.id === 'fontToggle') {
-            const current = parseInt(getComputedStyle(document.documentElement).fontSize);
-            const newSize = getNextSize(current);
-            applyFontSize(newSize);
-            localStorage.setItem(STORAGE_KEY, newSize);
-        }
+    // Button click
+    const btn = document.getElementById('fontToggle');
+    btn.addEventListener('click', () => {
+        // Always read current size from storage
+        let current = parseInt(localStorage.getItem(STORAGE_KEY)) || FONT_SIZES[0];
+        const next = getNextSize(current);
+        applyFontSize(next);
+        localStorage.setItem(STORAGE_KEY, next);
+        console.log(`Font size changed to ${next}px`);
     });
 });
+    

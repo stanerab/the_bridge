@@ -5,11 +5,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mood = isset($_POST['mood']) ? trim($_POST['mood']) : '';
     $note = isset($_POST['note']) ? trim($_POST['note']) : '';
 
-    $sql = mysqli_query($conn, "INSERT INTO mood_table (mood, note) VALUES('$mood', '$note')");
+    // Insert mood + note + both timestamps
+    $sql = mysqli_query($conn, "
+        INSERT INTO mood_table (mood, note, created_at, entry_date)
+        VALUES ('$mood', '$note', NOW(), NOW())
+    ");
+
     if ($sql) {
-        // echo "Mood saved successfully!";
+        // Mood saved successfully
+        // (You can redirect or show a message here if you want)
     } else {
-        //echo "Error: " . $conn->error;
+        echo "Error: " . $conn->error;
     }
 
     $conn->close();
@@ -18,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container text-center">
     <div class="row text-decoration-none m-0 p-0 mt-0 mb-0">
-        <div class="col-md-3 col-xl-3 col-lg-3 col-sm-3"></div>
-        <div class="col-md-6 col-xl-6 col-lg-6 col-sm-6">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-body p-5">
                     <div class="mb-4">
@@ -30,13 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </svg>
                     </div>
                     <h2 class="fw-bold text-success mb-3">Mood Saved Successfully!</h2>
-                    <h3 class="text-muted mb-2"> <?= $mood ?> </h3>
-                    <p class="text-muted mb-4 fs-5"> <?= $note ?> </p>
+                    <h3 class="text-muted mb-2"><?= htmlspecialchars($mood) ?></h3>
+                    <p class="text-muted mb-4 fs-5"><?= htmlspecialchars($note) ?></p>
                     <a href="toolkit.php" class="btn btn-success px-4">Go Back</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-xl-3 col-lg-3 col-sm-3"></div>
+        <div class="col-md-3"></div>
     </div>
 </div>
 

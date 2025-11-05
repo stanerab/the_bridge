@@ -22,7 +22,6 @@ if (!isset($_SESSION['user_id'])) {
       </a>
       <a href="home.php" class="btn btn-outline-secondary btn-lg rounded-pill shadow-sm">
         👪 I am a Family Member
-        <a href="logout.php">Logout</a>
       </a>
     </div>
   </div>
