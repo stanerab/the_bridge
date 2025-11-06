@@ -13,6 +13,7 @@
   </a>
 </footer>
 
+
 <script>
   let lastScrollTop = 0;
   const footer = document.getElementById("mainFooter");
