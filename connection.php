@@ -12,7 +12,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 } else {
   // live InfinityFree server
   $host = "sql100.infinityfree.com";
-  $user = "if0_40168601_adhdbridge";
+  $user = "if0_40168601";
   $pass = "Stanleyson00";
   $db = "if0_40168601_adhdbridge";
 }

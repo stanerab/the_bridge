@@ -7,12 +7,12 @@
       <div class="card-body p-4">
         <ul class="list-group list-group-flush">
           <li class="list-group-item border-0 py-3">
-            <a href="About.php" class="text-decoration-none fs-5 d-flex align-items-center">
+            <a href="about.php" class="text-decoration-none fs-5 d-flex align-items-center">
               <i class="bi bi-info-circle me-3"></i> About
             </a>
           </li>
           <li class="list-group-item border-0 py-3">
-            <a href="Contact.php" class="text-decoration-none fs-5 d-flex align-items-center">
+            <a href="contact.php" class="text-decoration-none fs-5 d-flex align-items-center">
               <i class="bi bi-envelope me-3"></i> Contact Us
             </a>
           </li>
