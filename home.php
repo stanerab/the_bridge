@@ -87,11 +87,16 @@
             <!-- RIGHT COLUMN -->
             <div class="col-lg-8">
                 <?php
-                $mysqli = new mysqli("localhost", "root", "", "adhd");
-                if ($mysqli->connect_error)
+                include_once('connection.php'); // $conn comes from connection.php
+                $mysqli = $conn; // Optional: keep using $mysqli for existing queries
+                
+                if ($mysqli->connect_error) {
                     die("Connection failed: " . $mysqli->connect_error);
+                }
 
-                //Mood Colors (matching order)
+                // -------------------------------
+                // 1️⃣ Mood Colors
+                // -------------------------------
                 $moodColors = [
                     'Angry' => '#dc3545',
                     'Sad' => '#0d6efd',
@@ -100,54 +105,42 @@
                     'Happy' => '#198754'
                 ];
 
-                // Average Mood (last 7 entries, by date)
+                // -------------------------------
+                // 2️⃣ Average Mood (last 7 days)
+                // -------------------------------
                 $avgMoodQuery = $mysqli->query("
-    SELECT entry_date, AVG(
-        CASE mood
-            WHEN 'Angry' THEN 1
-            WHEN 'Sad' THEN 2
-            WHEN 'Neutral' THEN 3
-            WHEN 'Okay' THEN 4
-            WHEN 'Happy' THEN 5
-        END
-    ) AS avg_mood
-    FROM mood_table
-    WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-    GROUP BY entry_date
-    ORDER BY entry_date
-");
+        SELECT entry_date, AVG(
+            CASE mood
+                WHEN 'Angry' THEN 1
+                WHEN 'Sad' THEN 2
+                WHEN 'Neutral' THEN 3
+                WHEN 'Okay' THEN 4
+                WHEN 'Happy' THEN 5
+            END
+        ) AS avg_mood
+        FROM mood_table
+        WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+        GROUP BY entry_date
+        ORDER BY entry_date
+    ");
+
                 $avgMoodLabels = $avgMoodData = [];
                 while ($r = $avgMoodQuery->fetch_assoc()) {
                     $avgMoodLabels[] = $r['entry_date'];
                     $avgMoodData[] = round($r['avg_mood'], 2);
                 }
 
-                // Mood Distribution
-                $moodDistQuery = $mysqli->query("
-                SELECT mood, COUNT(*) AS count 
-                FROM mood_table
-                WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-                GROUP BY mood
-            ");
-                $moodDistLabels = $moodDistData = [];
-                while ($r = $moodDistQuery->fetch_assoc()) {
-                    $moodDistLabels[] = $r['mood'];
-                    $moodDistData[] = $r['count'];
-                }
-
-
                 // -------------------------------
-                // 2️⃣ Mood Distribution (Donut Chart)
+                // 3️⃣ Mood Distribution (Donut Chart, last 7 days)
                 // -------------------------------
                 $moodDistQuery = $mysqli->query("
-                SELECT mood, COUNT(*) AS count
-                FROM mood_table
-                WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-                GROUP BY mood
-            ");
-                $moodDistLabels = [];
-                $moodDistData = [];
-                $moodDistColors = [];
+        SELECT mood, COUNT(*) AS count
+        FROM mood_table
+        WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+        GROUP BY mood
+    ");
+
+                $moodDistLabels = $moodDistData = $moodDistColors = [];
                 while ($r = $moodDistQuery->fetch_assoc()) {
                     $moodDistLabels[] = $r['mood'];
                     $moodDistData[] = $r['count'];
@@ -155,47 +148,49 @@
                 }
 
                 // -------------------------------
-                // 3️⃣ Average Mood by Weekday (Bar Chart, Mon → Sun)
+                // 4️⃣ Average Mood by Weekday (Mon → Sun)
                 // -------------------------------
                 $weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
+                // Average mood per weekday
                 $dayPatternQuery = $mysqli->query("
-                SELECT DAYNAME(entry_date) AS day, AVG(
-                    CASE mood
-                        WHEN 'Angry' THEN 1
-                        WHEN 'Sad' THEN 2
-                        WHEN 'Neutral' THEN 3
-                        WHEN 'Okay' THEN 4
-                        WHEN 'Happy' THEN 5
-                    END
-                ) AS avg_mood
-                FROM mood_table
-                GROUP BY DAYNAME(entry_date)
-            ");
-                $dbDayData = [];
-                while ($r = $dayPatternQuery->fetch_assoc())
-                    $dbDayData[$r['day']] = round($r['avg_mood'], 2);
+        SELECT DAYNAME(entry_date) AS day, AVG(
+            CASE mood
+                WHEN 'Angry' THEN 1
+                WHEN 'Sad' THEN 2
+                WHEN 'Neutral' THEN 3
+                WHEN 'Okay' THEN 4
+                WHEN 'Happy' THEN 5
+            END
+        ) AS avg_mood
+        FROM mood_table
+        GROUP BY DAYNAME(entry_date)
+    ");
 
-                $dayLabels = [];
-                $dayData = [];
-                $dayColors = [];
+                $dbDayData = [];
+                while ($r = $dayPatternQuery->fetch_assoc()) {
+                    $dbDayData[$r['day']] = round($r['avg_mood'], 2);
+                }
+
+                $dayLabels = $dayData = $dayColors = [];
                 foreach ($weekDays as $day) {
                     $dayLabels[] = $day;
                     $dayData[] = isset($dbDayData[$day]) ? $dbDayData[$day] : null;
 
-                    // Find most frequent mood of the day
+                    // Most frequent mood per day
                     $freqQuery = $mysqli->query("
-                    SELECT mood, COUNT(*) AS count
-                    FROM mood_table
-                    WHERE DAYNAME(entry_date) = '$day'
-                    GROUP BY mood
-                    ORDER BY count DESC
-                    LIMIT 1
-                ");
+            SELECT mood, COUNT(*) AS count
+            FROM mood_table
+            WHERE DAYNAME(entry_date) = '$day'
+            GROUP BY mood
+            ORDER BY count DESC
+            LIMIT 1
+        ");
                     $freq = $freqQuery->fetch_assoc();
                     $dayColors[] = $freq ? $moodColors[$freq['mood']] : '#0d6efd';
                 }
                 ?>
+
 
                 <!-- Tabs -->
                 <ul class="nav nav-tabs" id="chartTabs" role="tablist">
@@ -217,14 +212,16 @@
                     </div>
                     <div class="tab-pane fade" id="distMood">
                         <div class="card chart-card shadow-sm p-3">
-                            <h6 class="text-muted"><i class="fa-solid fa-pie-chart text-primary"></i> Mood Distribution
+                            <h6 class="text-muted"><i class="fa-solid fa-pie-chart text-primary"></i> Mood
+                                Distribution
                             </h6>
                             <canvas id="moodDistChart"></canvas>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="byDay">
                         <div class="card chart-card shadow-sm p-3">
-                            <h6 class="text-muted"><i class="fa-solid fa-bar-chart text-warning"></i> Average Mood by
+                            <h6 class="text-muted"><i class="fa-solid fa-bar-chart text-warning"></i> Average Mood
+                                by
                                 Day</h6>
                             <canvas id="dayPatternChart"></canvas>
                         </div>
