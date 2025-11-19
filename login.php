@@ -244,7 +244,6 @@ if (isset($_SESSION['user_id'])) {
     <div class="login-container">
         <div class="login-card">
             <div class="text-center mb-4">
-                <img src="images/ADHD_bridge_logo2.svg" alt="ADHD Bridge Logo" style="width: 80px;">
                 <h2>Welcome back!</h2>
                 <p>Access your ADHD Bridge account</p>
             </div>

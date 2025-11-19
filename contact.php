@@ -16,7 +16,7 @@ include("header.php");
         <?php endif; ?>
 
         <div class="row">
-            <div class="col-md-6 mx-auto">
+            <div class="col-md-20 mx-auto">
                 <form action="contact_submit.php" method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">Your Name</label>
@@ -30,7 +30,7 @@ include("header.php");
                         <label for="message" class="form-label">Message</label>
                         <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                    <button type="submit" class="btn btn-dark w-100">Send Message</button>
                 </form>
             </div>
         </div>

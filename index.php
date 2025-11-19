@@ -827,16 +827,22 @@
   <!-- TRUST BADGES -->
   <section class="trust-badges">
     <div class="container">
-      <div class="text-center small opacity-75 mb-3">Trusted and recommended by</div>
+      <div class="text-center small mb-3" style="color: var(--section-text)">Trusted and recommended by</div>
       <div class="row align-items-center justify-content-center g-4">
         <div class="col-auto">
-          <div class="badge-placeholder rounded p-3 opacity-75">ADHD Coach Association</div>
+          <div class="badge-placeholder rounded p-3"
+            style="color: var(--section-text); border: 1px solid var(--feature-border); background: var(--feature-bg);">
+            ADHD Coach Association</div>
         </div>
         <div class="col-auto">
-          <div class="badge-placeholder rounded p-3 opacity-75">Privacy Certified</div>
+          <div class="badge-placeholder rounded p-3"
+            style="color: var(--section-text); border: 1px solid var(--feature-border); background: var(--feature-bg);">
+            Privacy Certified</div>
         </div>
         <div class="col-auto">
-          <div class="badge-placeholder rounded p-3 opacity-75">Mental Health Tech</div>
+          <div class="badge-placeholder rounded p-3"
+            style="color: var(--section-text); border: 1px solid var(--feature-border); background: var(--feature-bg);">
+            Mental Health Tech</div>
         </div>
       </div>
     </div>

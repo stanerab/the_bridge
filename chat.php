@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 <div class="container mt-4">
     <h3>Chat (Moods & Notes)</h3>
-    <div id="chat-box" class="border rounded p-3" style="height:400px; overflow-y:auto; background:#f8f9fa;">
+    <div id="chat-box" class="border rounded p-3" style="height:600px; overflow-y:auto; background:#f8f9fa;">
         <!-- Messages will load here -->
     </div>
 </div>

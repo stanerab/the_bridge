@@ -12,53 +12,141 @@
         overflow-x: hidden;
     }
 
+    /* Purple Welcome Section */
+    .welcome-section {
+        background: linear-gradient(135deg, #6f42c1 0%, #8b5cf6 100%);
+        color: white;
+        border-radius: 16px;
+        padding: 2.5rem 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(111, 66, 193, 0.15);
+    }
+
+    /* Fixed Today's Focus badge - visible in light mode */
+    .focus-badge {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        font-weight: 500;
+    }
+
+    /* Professional Chart Styling */
     .chart-card {
-        min-height: 340px;
-        max-height: 420px;
-        width: 100%;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        border: none;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .chart-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .chart-container {
+        min-height: 320px;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-direction: column;
-        padding: 10px;
+        padding: 1rem;
     }
 
-    .chart-card canvas {
+    .chart-container canvas {
         width: 100% !important;
-        max-width: 580px;
-        height: 260px !important;
-        display: block;
-        margin: 0 auto;
+        max-width: 100%;
+        height: 280px !important;
     }
 
-    #distMood .chart-card {
-        min-height: 360px;
-        max-height: 400px;
-        justify-content: center;
+    /* Professional Tabs with Purple Theme */
+    .nav-tabs-custom {
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        margin-bottom: 1.5rem;
     }
 
-    #distMood canvas {
-        width: 90% !important;
-        max-width: 340px !important;
-        max-height: 340px !important;
-        height: auto !important;
-        aspect-ratio: 1/1;
-        display: block;
-        margin: 0 auto;
+    .nav-tabs-custom .nav-link {
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        color: #6c757d;
+        border-radius: 8px 8px 0 0;
+        margin-right: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-tabs-custom .nav-link.active {
+        background: #6f42c1;
+        color: white;
+        box-shadow: 0 -2px 10px rgba(111, 66, 193, 0.2);
+    }
+
+    .nav-tabs-custom .nav-link:hover:not(.active) {
+        background: rgba(111, 66, 193, 0.05);
+        color: #6f42c1;
+    }
+
+    /* Purple accent for icons */
+    .text-primary {
+        color: #6f42c1 !important;
+    }
+
+    /* Original styles preserved */
+    .bg-white {
+        background-color: white !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    }
+
+    .rounded {
+        border-radius: 0.375rem !important;
+    }
+
+    .list-group-item {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+        .chart-card {
+            background: #1e1e1e;
+        }
+
+        .nav-tabs-custom {
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .focus-badge {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
     }
 </style>
 
 <body class="bg-light">
     <div class="container mt-3">
 
-        <!-- Header -->
-        <div class="bg-white p-4 shadow-sm rounded mb-4 text-center">
-            <h4>Welcome back, Jordan 👋</h4>
-            <p class="text-muted">Track your moods, gain insights, and communicate with clarity.</p>
+        <!-- Purple Welcome Section -->
+        <div class="welcome-section">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-6 fw-bold mb-2">Welcome back, Jordan 👋</h1>
+                    <p class="lead mb-0 opacity-90">Track your moods, gain insights, and communicate with clarity.</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-inline-block focus-badge px-3 py-2 rounded-pill">
+                        <small class="fw-medium">Today's Focus: Emotional Awareness</small>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row g-4">
-            <!-- LEFT COLUMN -->
+            <!-- LEFT COLUMN - Original Content -->
             <div class="col-lg-4">
                 <div class="bg-white p-3 shadow-sm rounded mb-3">
                     <h5><i class="fa-solid fa-comment-dots text-primary"></i> Ready-made Scripts</h5>
@@ -84,19 +172,17 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN -->
+            <!-- RIGHT COLUMN - Professional Charts -->
             <div class="col-lg-8">
                 <?php
-                include_once('connection.php'); // $conn comes from connection.php
-                $mysqli = $conn; // Optional: keep using $mysqli for existing queries
-                
+                include_once('connection.php');
+                $mysqli = $conn;
+
                 if ($mysqli->connect_error) {
                     die("Connection failed: " . $mysqli->connect_error);
                 }
 
-                // -------------------------------
-                // 1️⃣ Mood Colors
-                // -------------------------------
+                // Mood Colors
                 $moodColors = [
                     'Angry' => '#dc3545',
                     'Sad' => '#0d6efd',
@@ -105,40 +191,36 @@
                     'Happy' => '#198754'
                 ];
 
-                // -------------------------------
-                // 2️⃣ Average Mood (last 7 days)
-                // -------------------------------
+                // Average Mood (last 7 days)
                 $avgMoodQuery = $mysqli->query("
-        SELECT entry_date, AVG(
-            CASE mood
-                WHEN 'Angry' THEN 1
-                WHEN 'Sad' THEN 2
-                WHEN 'Neutral' THEN 3
-                WHEN 'Okay' THEN 4
-                WHEN 'Happy' THEN 5
-            END
-        ) AS avg_mood
-        FROM mood_table
-        WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-        GROUP BY entry_date
-        ORDER BY entry_date
-    ");
+                    SELECT entry_date, AVG(
+                        CASE mood
+                            WHEN 'Angry' THEN 1
+                            WHEN 'Sad' THEN 2
+                            WHEN 'Neutral' THEN 3
+                            WHEN 'Okay' THEN 4
+                            WHEN 'Happy' THEN 5
+                        END
+                    ) AS avg_mood
+                    FROM mood_table
+                    WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                    GROUP BY entry_date
+                    ORDER BY entry_date
+                ");
 
                 $avgMoodLabels = $avgMoodData = [];
                 while ($r = $avgMoodQuery->fetch_assoc()) {
-                    $avgMoodLabels[] = $r['entry_date'];
+                    $avgMoodLabels[] = date('M j', strtotime($r['entry_date']));
                     $avgMoodData[] = round($r['avg_mood'], 2);
                 }
 
-                // -------------------------------
-                // 3️⃣ Mood Distribution (Donut Chart, last 7 days)
-                // -------------------------------
+                // Mood Distribution (Donut Chart, last 7 days)
                 $moodDistQuery = $mysqli->query("
-        SELECT mood, COUNT(*) AS count
-        FROM mood_table
-        WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-        GROUP BY mood
-    ");
+                    SELECT mood, COUNT(*) AS count
+                    FROM mood_table
+                    WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                    GROUP BY mood
+                ");
 
                 $moodDistLabels = $moodDistData = $moodDistColors = [];
                 while ($r = $moodDistQuery->fetch_assoc()) {
@@ -147,25 +229,22 @@
                     $moodDistColors[] = $moodColors[$r['mood']];
                 }
 
-                // -------------------------------
-                // 4️⃣ Average Mood by Weekday (Mon → Sun)
-                // -------------------------------
+                // Average Mood by Weekday
                 $weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-                // Average mood per weekday
                 $dayPatternQuery = $mysqli->query("
-        SELECT DAYNAME(entry_date) AS day, AVG(
-            CASE mood
-                WHEN 'Angry' THEN 1
-                WHEN 'Sad' THEN 2
-                WHEN 'Neutral' THEN 3
-                WHEN 'Okay' THEN 4
-                WHEN 'Happy' THEN 5
-            END
-        ) AS avg_mood
-        FROM mood_table
-        GROUP BY DAYNAME(entry_date)
-    ");
+                    SELECT DAYNAME(entry_date) AS day, AVG(
+                        CASE mood
+                            WHEN 'Angry' THEN 1
+                            WHEN 'Sad' THEN 2
+                            WHEN 'Neutral' THEN 3
+                            WHEN 'Okay' THEN 4
+                            WHEN 'Happy' THEN 5
+                        END
+                    ) AS avg_mood
+                    FROM mood_table
+                    GROUP BY DAYNAME(entry_date)
+                ");
 
                 $dbDayData = [];
                 while ($r = $dayPatternQuery->fetch_assoc()) {
@@ -174,56 +253,75 @@
 
                 $dayLabels = $dayData = $dayColors = [];
                 foreach ($weekDays as $day) {
-                    $dayLabels[] = $day;
+                    $dayLabels[] = substr($day, 0, 3);
                     $dayData[] = isset($dbDayData[$day]) ? $dbDayData[$day] : null;
 
-                    // Most frequent mood per day
                     $freqQuery = $mysqli->query("
-            SELECT mood, COUNT(*) AS count
-            FROM mood_table
-            WHERE DAYNAME(entry_date) = '$day'
-            GROUP BY mood
-            ORDER BY count DESC
-            LIMIT 1
-        ");
+                        SELECT mood, COUNT(*) AS count
+                        FROM mood_table
+                        WHERE DAYNAME(entry_date) = '$day'
+                        GROUP BY mood
+                        ORDER BY count DESC
+                        LIMIT 1
+                    ");
                     $freq = $freqQuery->fetch_assoc();
-                    $dayColors[] = $freq ? $moodColors[$freq['mood']] : '#0d6efd';
+                    $dayColors[] = $freq ? $moodColors[$freq['mood']] : '#6f42c1';
                 }
                 ?>
 
-
-                <!-- Tabs -->
-                <ul class="nav nav-tabs" id="chartTabs" role="tablist">
-                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab"
-                            data-bs-target="#avgMood">📈 Average Mood</button></li>
-                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#distMood">🎨
-                            Mood Distribution</button></li>
-                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#byDay">📅 By
-                            Day</button></li>
+                <!-- Professional Chart Tabs -->
+                <ul class="nav nav-tabs-custom" id="chartTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="avgMood-tab" data-bs-toggle="tab" data-bs-target="#avgMood"
+                            type="button" role="tab">
+                            <i class="fa-solid fa-line-chart"></i> Average Mood
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="distMood-tab" data-bs-toggle="tab" data-bs-target="#distMood"
+                            type="button" role="tab">
+                            <i class="fa-solid fa-pie-chart"></i> Mood Distribution
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="byDay-tab" data-bs-toggle="tab" data-bs-target="#byDay"
+                            type="button" role="tab">
+                            <i class="fa-solid fa-bar-chart"></i> By Day
+                        </button>
+                    </li>
                 </ul>
 
-                <div class="tab-content mt-3">
-                    <div class="tab-pane fade show active" id="avgMood">
-                        <div class="card chart-card shadow-sm p-3">
-                            <h6 class="text-muted"><i class="fa-solid fa-line-chart text-success"></i> Average Mood
+                <div class="tab-content">
+                    <!-- Average Mood Tab -->
+                    <div class="tab-pane fade show active" id="avgMood" role="tabpanel">
+                        <div class="chart-card">
+                            <h6 class="text-muted mb-3"><i class="fa-solid fa-line-chart text-success"></i> Average Mood
                                 (Last 7 Days)</h6>
-                            <canvas id="avgMoodChart"></canvas>
+                            <div class="chart-container">
+                                <canvas id="avgMoodChart"></canvas>
+                            </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="distMood">
-                        <div class="card chart-card shadow-sm p-3">
-                            <h6 class="text-muted"><i class="fa-solid fa-pie-chart text-primary"></i> Mood
-                                Distribution
-                            </h6>
-                            <canvas id="moodDistChart"></canvas>
+
+                    <!-- Mood Distribution Tab -->
+                    <div class="tab-pane fade" id="distMood" role="tabpanel">
+                        <div class="chart-card">
+                            <h6 class="text-muted mb-3"><i class="fa-solid fa-pie-chart text-primary"></i> Mood
+                                Distribution</h6>
+                            <div class="chart-container">
+                                <canvas id="moodDistChart"></canvas>
+                            </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="byDay">
-                        <div class="card chart-card shadow-sm p-3">
-                            <h6 class="text-muted"><i class="fa-solid fa-bar-chart text-warning"></i> Average Mood
-                                by
-                                Day</h6>
-                            <canvas id="dayPatternChart"></canvas>
+
+                    <!-- By Day Tab -->
+                    <div class="tab-pane fade" id="byDay" role="tabpanel">
+                        <div class="chart-card">
+                            <h6 class="text-muted mb-3"><i class="fa-solid fa-bar-chart text-warning"></i> Average Mood
+                                by Day</h6>
+                            <div class="chart-container">
+                                <canvas id="dayPatternChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -232,7 +330,7 @@
     </div>
 
     <script>
-        // Line Chart
+        // Line Chart - Average Mood Trends
         new Chart(document.getElementById('avgMoodChart'), {
             type: 'line',
             data: {
@@ -241,28 +339,77 @@
                     label: 'Average Mood',
                     data: <?php echo json_encode($avgMoodData); ?>,
                     borderColor: '#198754',
-                    backgroundColor: 'rgba(25,135,84,0.2)',
+                    backgroundColor: 'rgba(25,135,84,0.1)',
+                    borderWidth: 3,
                     fill: true,
-                    tension: 0.3
+                    tension: 0.4,
+                    pointBackgroundColor: '#198754',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 1, max: 5 } } }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        min: 1,
+                        max: 5,
+                        ticks: {
+                            callback: function (value) {
+                                const moods = ['', 'Angry', 'Sad', 'Neutral', 'Okay', 'Happy'];
+                                return moods[value] || value;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const moods = ['', 'Angry', 'Sad', 'Neutral', 'Okay', 'Happy'];
+                                return `Mood: ${moods[Math.round(context.raw)]} (${context.raw})`;
+                            }
+                        }
+                    }
+                }
+            }
         });
 
-        // Donut Chart
+        // Donut Chart - Mood Distribution
         new Chart(document.getElementById('moodDistChart'), {
             type: 'doughnut',
             data: {
                 labels: <?php echo json_encode($moodDistLabels); ?>,
                 datasets: [{
                     data: <?php echo json_encode($moodDistData); ?>,
-                    backgroundColor: <?php echo json_encode($moodDistColors); ?>
+                    backgroundColor: <?php echo json_encode($moodDistColors); ?>,
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '65%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    }
+                }
+            }
         });
 
-        // Bar Chart
+        // Bar Chart - Weekly Patterns
         new Chart(document.getElementById('dayPatternChart'), {
             type: 'bar',
             data: {
@@ -270,10 +417,33 @@
                 datasets: [{
                     label: 'Average Mood',
                     data: <?php echo json_encode($dayData); ?>,
-                    backgroundColor: <?php echo json_encode($dayColors); ?>
+                    backgroundColor: <?php echo json_encode($dayColors); ?>,
+                    borderWidth: 0,
+                    borderRadius: 8,
+                    borderSkipped: false,
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 1, max: 5 } } }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        min: 1,
+                        max: 5,
+                        ticks: {
+                            callback: function (value) {
+                                const moods = ['', 'Angry', 'Sad', 'Neutral', 'Okay', 'Happy'];
+                                return moods[value] || value;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
         });
     </script>
 

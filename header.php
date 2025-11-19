@@ -98,18 +98,49 @@
 </head>
 
 <body>
-  <!-- Navbar with dark mode toggle on right -->
-  <nav class="navbar navbar-light bg-white px-3 d-flex justify-content-between align-items-center">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="images/ADHD_bridge_logo2.svg" alt="ADHD Bridge Logo"
-        style="max-width: 120px; height: auto; margin-right: 10px;" />
-    </a>
 
-    <!-- Right-aligned toggle -->
-    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
-      <i class="bi bi-sun fade-icon"></i>
-    </button>
+
+  <!-- Navbar with dark mode toggle on right -->
+  <nav class="navbar navbar-expand-md navbar-light bg-white py-2">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <!-- Left: Logo + Brand -->
+      <div class="d-flex align-items-center gap-2">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <!-- SVG Logo -->
+          <svg viewBox="0 0 100 100" width="36" height="36" role="img" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#FFD974" />
+                <stop offset="1" stop-color="#FFB4A2" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="50" fill="url(#g1)" />
+            <path d="M36 60c8-18 28-18 34-6" stroke="#6F42C1" stroke-width="6" stroke-linecap="round" fill="none" />
+          </svg>
+          <!-- Brand Name -->
+          <span class="ms-2 fw-bold text-dark">ADHD Bridge</span>
+        </a>
+      </div>
+
+      <!-- Right: Theme toggle button -->
+      <div class="d-flex align-items-center gap-2">
+        <button id="themeToggleBtn" class="btn btn-sm btn-outline-dark" title="Toggle theme">
+          <i class="bi bi-sun fade-icon"></i>
+        </button>
+      </div>
+
+    </div>
   </nav>
+
+  <style>
+    /* Ensure SVG logo has no border/background */
+    .navbar svg {
+      display: block;
+      background: transparent;
+    }
+  </style>
+
 
   <script>
     const toggleBtn = document.getElementById('themeToggleBtn');

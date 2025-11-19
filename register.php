@@ -315,6 +315,7 @@
                                 fill="none" />
                         </svg>
                     </div>
+
                     <div class="brand">ADHD Bridge</div>
                 </div>
 
@@ -327,91 +328,50 @@
         </div>
     </nav>
 
-    <!-- REGISTER FORM -->
-    <section class="register-container">
-        <div class="register-glass">
+    <section class="register-container container my-5">
+        <div class="register-glass p-4 border rounded shadow">
             <h1 class="register-title">Create Your Account</h1>
             <p class="register-subtitle">Start your journey to better communication</p>
 
-            <form id="registerForm">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
-                            <label for="firstName">First Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
-                            <label for="lastName">Last Name</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-floating">
-                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
-                    <label for="email">Email Address</label>
-                </div>
-
-                <div class="form-floating">
-                    <input type="password" class="form-control" id="password" placeholder="Password" required
-                        minlength="8">
-                    <label for="password">Password</label>
-                    <div class="form-text" style="color: rgba(255,255,255,0.7);">
-                        Must be at least 8 characters
-                    </div>
-                </div>
-
-                <div class="form-floating">
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password"
+            <form id="registerForm" method="POST" action="register_process.php">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username"
                         required>
+                    <label for="username">Username</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                        required minlength="8">
+                    <label for="password">Password</label>
+                    <div class="form-text">Must be at least 8 characters</div>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                        placeholder="Confirm Password" required>
                     <label for="confirmPassword">Confirm Password</label>
                 </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="terms" required>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
                     <label class="form-check-label" for="terms">
-                        I agree to the <a href="#" style="color: var(--accent);">Terms of Service</a> and <a href="#"
-                            style="color: var(--accent);">Privacy Policy</a>
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
                     </label>
                 </div>
 
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="newsletter">
-                    <label class="form-check-label" for="newsletter">
-                        Send me helpful tips and resources about ADHD management
-                    </label>
-                </div>
-
-                <button type="submit" class="btn btn-register">Create Account</button>
-
-                <div class="divider">
-                    <span>Or continue with</span>
-                </div>
-
-                <div class="social-login">
-                    <button type="button" class="btn-social">
-                        <span>Google</span>
-                    </button>
-                    <button type="button" class="btn-social">
-                        <span>Apple</span>
-                    </button>
-                </div>
-
-                <a href="login.php" class="btn-login">
-                    Already have an account? Sign in
-                </a>
+                <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                <p class="mt-3 text-center">Already have an account? <a href="login.php">Sign in</a></p>
             </form>
         </div>
     </section>
 
-    <!-- Scripts -->
+    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         /* ---------------------------
-           THEME toggle
+           DARK/LIGHT THEME TOGGLE
         --------------------------- */
         const body = document.getElementById('pageBody');
         const themeBtn = document.getElementById('themeToggle');
@@ -433,89 +393,34 @@
         }
 
         applyTheme(storedTheme);
-        themeBtn.addEventListener('click', () => applyTheme(body.classList.contains('theme-dark') ? 'light' : 'dark'));
+        themeBtn.addEventListener('click', () => {
+            const newTheme = body.classList.contains('theme-dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
 
         /* ---------------------------
            FORM VALIDATION
         --------------------------- */
         const registerForm = document.getElementById('registerForm');
-
         registerForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
             const terms = document.getElementById('terms').checked;
 
-            // Password match validation
             if (password !== confirmPassword) {
-                alert('Passwords do not match. Please try again.');
+                e.preventDefault();
+                alert('Passwords do not match.');
                 return;
             }
-
-            // Terms validation
             if (!terms) {
-                alert('Please agree to the Terms of Service and Privacy Policy.');
+                e.preventDefault();
+                alert('Please agree to the Terms and Privacy Policy.');
                 return;
             }
-
-            // If validation passes, show success message
-            alert('Account created successfully! Redirecting to login...');
-            // In a real application, you would submit the form here
-            // registerForm.submit();
+            // Form submits normally if validation passes
         });
-
-        /* ---------------------------
-           PASSWORD STRENGTH INDICATOR
-        --------------------------- */
-        const passwordInput = document.getElementById('password');
-
-        passwordInput.addEventListener('input', function () {
-            const password = this.value;
-            const strengthText = this.nextElementSibling?.nextElementSibling;
-
-            if (strengthText && strengthText.classList.contains('form-text')) {
-                let strength = 'Weak';
-                let color = '#ff6b6b';
-
-                if (password.length >= 12) {
-                    strength = 'Strong';
-                    color = '#51cf66';
-                } else if (password.length >= 8) {
-                    strength = 'Medium';
-                    color = '#ffd43b';
-                }
-
-                strengthText.innerHTML = `Password strength: <span style="color: ${color}">${strength}</span>`;
-            }
-        });
-
-        /* ---------------------------
-           ACCESSIBILITY - Lexend font toggle
-        --------------------------- */
-        const lexendToggle = document.createElement('button');
-        lexendToggle.className = 'btn btn-sm btn-outline-light ms-2';
-        lexendToggle.textContent = 'Lexend';
-        lexendToggle.id = 'lexendToggle';
-
-        themeBtn.parentNode.appendChild(lexendToggle);
-
-        const storedLexend = localStorage.getItem('bridge-lexend') === 'true';
-
-        function applyLexend(on) {
-            if (on) {
-                document.body.classList.add('lexend');
-                lexendToggle.textContent = 'Lexend ✓';
-            } else {
-                document.body.classList.remove('lexend');
-                lexendToggle.textContent = 'Lexend';
-            }
-            localStorage.setItem('bridge-lexend', on ? 'true' : 'false');
-        }
-
-        applyLexend(storedLexend);
-        lexendToggle.addEventListener('click', () => applyLexend(!document.body.classList.contains('lexend')));
     </script>
+
 </body>
 
 </html>
