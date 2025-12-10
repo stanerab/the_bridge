@@ -1,3 +1,44 @@
+<?php
+// --- DATABASE CONNECTION ---
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "adhdbridge";
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// --- DEFAULT $result SO IT ALWAYS EXISTS ---
+$result = null;
+
+// --- FETCH FROM mood TABLE (ADJUST COLUMN NAMES IF NEEDED) ---
+$sql = "SELECT * FROM mood_table ORDER BY created_at DESC LIMIT 5";
+$queryResult = $conn->query($sql);
+
+if ($queryResult) {
+    $result = $queryResult;
+}
+
+// --- timeAgo FUNCTION ---
+function timeAgo($datetime)
+{
+    $time = strtotime($datetime);
+    $diff = time() - $time;
+
+    if ($diff < 60)
+        return $diff . "s ago";
+    elseif ($diff < 3600)
+        return floor($diff / 60) . "m ago";
+    elseif ($diff < 86400)
+        return floor($diff / 3600) . "h ago";
+    else
+        return floor($diff / 86400) . "d ago";
+}
+?>
+
 <?php include("header.php"); ?>
 
 <!-- Bootstrap + Font Awesome + Chart.js -->
@@ -134,43 +175,69 @@
         <div class="welcome-section">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1 class="display-6 fw-bold mb-2">Welcome back, Jordan 👋</h1>
+                    <h1 class="display-6 fw-bold mb-2">Welcome back, Stanley 👋</h1>
                     <p class="lead mb-0 opacity-90">Track your moods, gain insights, and communicate with clarity.</p>
                 </div>
                 <div class="col-md-4 text-md-end">
-                    <div class="d-inline-block focus-badge px-3 py-2 rounded-pill">
-                        <small class="fw-medium">Today's Focus: Emotional Awareness</small>
-                    </div>
-                </div>
+    <div class="d-inline-block">
+        <!-- Combined Badge with Button -->
+        <div class="focus-badge px-3 py-2 rounded-pill d-flex align-items-center gap-2">
+            <small class="fw-medium">Today's Focus: Emotional Awareness</small>
+            <a href="insights.php" class="btn btn-link btn-sm p-0 text-decoration-none">
+                <i class="fa-solid fa-arrow-right text-white"></i>
+            </a>
+        </div>
+    </div>
+</div>
             </div>
         </div>
 
         <div class="row g-4">
-            <!-- LEFT COLUMN - Original Content -->
-            <div class="col-lg-4">
-                <div class="bg-white p-3 shadow-sm rounded mb-3">
-                    <h5><i class="fa-solid fa-comment-dots text-primary"></i> Ready-made Scripts</h5>
-                    <ul class="list-group list-group-flush small">
-                        <li class="list-group-item"><strong>Need a break</strong><br><small>"I need a short break to
-                                refocus. Can we pause for 10 minutes?"</small></li>
-                        <li class="list-group-item"><strong>Feeling overwhelmed</strong><br><small>"I'm feeling
-                                overwhelmed. Can we simplify this to the top 2 tasks?"</small></li>
-                    </ul>
-                </div>
-                <div class="bg-white p-3 shadow-sm rounded mb-3">
-                    <h5><i class="fa-solid fa-clock text-success"></i> Visual Aids & Timers</h5>
-                    <p class="text-muted small">Use visual countdowns and structured timers to stay focused.</p>
-                </div>
-                <div class="bg-white p-3 shadow-sm rounded">
-                    <h5><i class="fa-solid fa-user-group text-info"></i> Recent Conversations</h5>
-                    <ul class="list-unstyled mb-0 small">
-                        <li><strong>With Lucy</strong> — Shared how I felt about the project. <small
-                                class="text-muted">2d ago</small></li>
-                        <li><strong>With Dad</strong> — Asked for more structure at home. <small class="text-muted">5d
-                                ago</small></li>
-                    </ul>
-                </div>
-            </div>
+           <!-- LEFT COLUMN - Original Content -->
+<div class="col-lg-4">
+    <div class="bg-white p-3 shadow-sm rounded mb-3">
+        <h5><i class="fa-solid fa-comment-dots text-primary"></i> Ready-made Scripts</h5>
+        <ul class="list-group list-group-flush small">
+            <li class="list-group-item"><strong>Need a break</strong><br><small>"I need a short break to
+                    refocus. Can we pause for 10 minutes?"</small></li>
+            <li class="list-group-item"><strong>Feeling overwhelmed</strong><br><small>"I'm feeling
+                    overwhelmed. Can we simplify this to the top 2 tasks?"</small></li>
+        </ul>
+    </div>
+
+    <div class="bg-white p-3 shadow-sm rounded mb-3">
+        <h5><i class="fa-solid fa-clock text-success"></i> Visual Aids & Timers</h5>
+        <p class="text-muted small">Use visual countdowns and structured timers to stay focused.</p>
+    </div>
+
+    <!-- ✅ DYNAMIC RECENT MOODS -->
+    <div class="bg-white p-3 shadow-sm rounded">
+        <h5><i class="fa-solid fa-user-group text-info"></i> Recent Conversations</h5>
+        <ul class="list-unstyled mb-0 small">
+
+            <?php if ($result && $result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <li>
+                        <strong><?= htmlspecialchars($row['user_name'] ?? 'You') ?></strong> —
+                        <?= htmlspecialchars($row['mood']) ?>
+
+                        <?php if (!empty($row['note'])): ?>
+                            — <?= htmlspecialchars($row['note']) ?>
+                        <?php endif; ?>
+
+                        <small class="text-muted">
+                            <?= timeAgo($row['created_at']) ?>
+                        </small>
+                    </li>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <li class="text-muted">No recent mood entries.</li>
+            <?php endif; ?>
+
+        </ul>
+    </div>
+</div>
+
 
             <!-- RIGHT COLUMN - Professional Charts -->
             <div class="col-lg-8">

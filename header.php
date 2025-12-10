@@ -122,6 +122,15 @@
           <span class="ms-2 fw-bold text-dark">ADHD Bridge</span>
         </a>
       </div>
+      <div class="col-md-4 text-md-end d-flex justify-content-end align-items-center gap-2">
+        <div class="d-inline-block focus-badge px-3 py-2 rounded-pill">
+          <small class="fw-medium"></small>
+        </div>
+        </a>
+      </div>
+
+
+
 
       <!-- Right: Theme toggle button -->
       <div class="d-flex align-items-center gap-2">

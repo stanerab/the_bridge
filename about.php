@@ -182,7 +182,7 @@
 <body>
     <?php include("header.php"); ?>
 
-    <!-- Hero Section -->
+
     <section class="hero-section">
         <div class="container" data-animate>
             <div class="row align-items-center">
@@ -197,7 +197,6 @@
         </div>
     </section>
 
-    <!-- Mission Section -->
     <section class="mission-section">
         <div class="container" data-animate>
             <h2 class="section-title center text-center">Our Mission</h2>
