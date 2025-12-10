@@ -182,7 +182,7 @@ function timeAgo($datetime)
     <div class="d-inline-block">
         <!-- Combined Badge with Button -->
         <div class="focus-badge px-3 py-2 rounded-pill d-flex align-items-center gap-2">
-            <small class="fw-medium">Today's Focus: Emotional Awareness</small>
+            <small class="fw-medium">View Today's Insight</small>
             <a href="insights.php" class="btn btn-link btn-sm p-0 text-decoration-none">
                 <i class="fa-solid fa-arrow-right text-white"></i>
             </a>
