@@ -1,6 +1,6 @@
 <?php
 session_start();
-include(__DIR__ . "/../includes/header.php");
+include(__DIR__ . "/../includes/worker_header.php");
 
 $allowed_roles = ['support_worker','nurse','clinician','ward_manager'];
 
@@ -412,15 +412,7 @@ $recentMoodCount = $recentMoods['recent_count'] ?? 0;
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="mt-4 pt-3 border-top text-center text-muted">
-            <p class="mb-0">
-                &copy; <?= date('Y') ?> Made with care. 
-                <span class="text-muted">Last updated: <?= date('g:i a') ?></span>
-            </p>
-        </footer>
-    </div>
-
+    
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -442,3 +434,4 @@ $recentMoodCount = $recentMoods['recent_count'] ?? 0;
     </script>
 </body>
 </html>
+<?php include("../includes/footer.php"); ?>

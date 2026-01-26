@@ -152,3 +152,5 @@ $wards = $pdo->query("SELECT * FROM wards ORDER BY ward_name")->fetchAll(PDO::FE
         </div>
     </div>
 </div>
+
+<?php include("../includes/footer.php"); ?>

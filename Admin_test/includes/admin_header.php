@@ -1,5 +1,8 @@
 <?php
-include_once('connection.php');
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+require_once __DIR__ . '/../../connection.php';
+
 
 date_default_timezone_set('Europe/London');
 
@@ -111,6 +114,19 @@ if (!function_exists('timeAgo')) {
     .fade-out {
       opacity: 0;
     }
+    .bridge-logo {
+    height: 70px;
+    width: auto;
+    max-height: none;
+    display: block;
+}
+.role-badge {
+    background: #6f42c1;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
   </style>
 
   <script>
@@ -125,47 +141,56 @@ if (!function_exists('timeAgo')) {
 <body>
 
 
-  <!-- Navbar with dark mode toggle on right -->
-  <nav class="navbar navbar-expand-md navbar-light bg-white py-2">
-    <div class="container d-flex align-items-center justify-content-between">
+</style>
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-4 py-2">
+  <div class="container d-flex align-items-center justify-content-between">
 
-      <!-- Left: Logo + Brand -->
-      <div class="d-flex align-items-center gap-2">
-        <a class="navbar-brand d-flex align-items-center" href="Admin_test/worker/dashboard.php">
-          <!-- SVG Logo -->
-          <svg viewBox="0 0 100 100" width="36" height="36" role="img" aria-hidden="true">
-            <defs>
-              <linearGradient id="g1" x1="0" x2="1">
-                <stop offset="0" stop-color="#FFD974" />
-                <stop offset="1" stop-color="#FFB4A2" />
-              </linearGradient>
-            </defs>
-            <circle cx="50" cy="50" r="50" fill="url(#g1)" />
-            <path d="M36 60c8-18 28-18 34-6" stroke="#6F42C1" stroke-width="6" stroke-linecap="round" fill="none" />
-          </svg>
-          <!-- Brand Name -->
-          <span class="ms-2 fw-bold text-dark">The Bridge</span>
-        </a>
+    <!-- Left: Logo + Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="dashboard.php">
+      <!-- SVG Logo -->
+      <svg viewBox="0 0 100 100" width="36" height="36" aria-hidden="true">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1">
+            <stop offset="0" stop-color="#FFD974" />
+            <stop offset="1" stop-color="#FFB4A2" />
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="50" fill="url(#g1)" />
+        <path d="M36 60c8-18 28-18 34-6" stroke="#6F42C1" stroke-width="6" stroke-linecap="round" fill="none" />
+      </svg>
+      <span class="fw-bold text-dark">The Bridge</span>
+    </a>
+
+    <!-- Right: Theme + User Info -->
+    <div class="d-flex align-items-center gap-3">
+
+      <!-- Theme Toggle -->
+      <button id="themeToggleBtn" class="btn btn-sm btn-outline-dark" title="Toggle theme">
+        <i class="bi bi-sun fade-icon"></i>
+      </button>
+
+      <!-- User -->
+      <div class="text-end">
+        <div class="small text-muted">Logged in as</div>
+        <div class="fw-medium"><?= htmlspecialchars($_SESSION['name']) ?></div>
       </div>
-      <div class="col-md-4 text-md-end d-flex justify-content-end align-items-center gap-2">
-        <div class="d-inline-block focus-badge px-3 py-2 rounded-pill">
-          <small class="fw-medium"></small>
-        </div>
-        </a>
-      </div>
 
+      <!-- Role -->
+      <span class="role-badge">
+        <?= htmlspecialchars(ucfirst(str_replace('_', ' ', $_SESSION['role']))) ?>
+      </span>
 
-
-
-      <!-- Right: Theme toggle button -->
-      <div class="d-flex align-items-center gap-2">
-        <button id="themeToggleBtn" class="btn btn-sm btn-outline-dark" title="Toggle theme">
-          <i class="bi bi-sun fade-icon"></i>
-        </button>
-      </div>
+      <!-- Logout -->
+      <a href="../logout.php" class="btn btn-outline-danger btn-sm">
+        <i class="bi bi-box-arrow-right me-1"></i>Logout
+      </a>
 
     </div>
-  </nav>
+
+  </div>
+</nav>
+
+
 
   <style>
     /* Ensure SVG logo has no border/background */
@@ -217,3 +242,4 @@ if (!function_exists('timeAgo')) {
       }
     });
   </script>
+

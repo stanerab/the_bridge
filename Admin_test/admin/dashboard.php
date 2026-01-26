@@ -1,6 +1,6 @@
 <?php
 session_start();
-include(__DIR__ . "/../includes/header.php");
+include(__DIR__ . "/../includes/admin_header.php");
 
 // Enhanced security checks
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -436,15 +436,9 @@ $adminName = $_SESSION['username'] ?? 'Administrator';
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="mt-5 pt-4 border-top text-center text-muted">
-            <p class="mb-0">
-                &copy; <?= date('Y') ?> The Bridge. All rights reserved.
-            </p>
-            <small>Last updated: <?= date('g:i a') ?></small>
-        </footer>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<?php include("../includes/footer.php"); ?>

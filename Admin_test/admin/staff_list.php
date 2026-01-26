@@ -33,7 +33,8 @@ $staff = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body class="bg-light">
 
-<?php include("../includes/header.php"); ?>
+<?php include(__DIR__ . "/../includes/admin_header.php");?>
+
 
 <!-- PAGE CONTENT CONTAINER -->
 <div class="container py-4">
@@ -58,34 +59,35 @@ $staff = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($staff as $s): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($s['name']) ?></td>
-                            <td>
-                                <span class="badge <?= $s['role'] === 'admin' ? 'bg-danger' : 'bg-secondary' ?>">
-                                    <?= htmlspecialchars($s['role']) ?>
-                                </span>
-                            </td>
-                            <td><?= htmlspecialchars($s['ward_name'] ?? '—') ?></td>
-                            <td><?= htmlspecialchars($s['username']) ?></td>
-                            <td><?= htmlspecialchars($s['email']) ?></td>
-                            <td class="text-center">
-                                <?php if ($s['id'] != $_SESSION['user_id']): ?>
-                                    <form method="POST"
-                                          action="delete_staff.php"
-                                          class="d-inline"
-                                          onsubmit="return confirm('Are you sure you want to delete this staff account?');">
-                                        <input type="hidden" name="user_id" value="<?= $s['id'] ?>">
-                                        <button class="btn btn-sm btn-outline-danger">
-                                            Delete
-                                        </button>
-                                    </form>
-                                <?php else: ?>
-                                    <span class="text-muted small">You</span>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
+                       <?php foreach ($staff as $s): ?>
+<tr>
+    <td><?= htmlspecialchars($s['name'] ?? '') ?></td>
+    <td>
+        <span class="badge <?= ($s['role'] ?? '') === 'admin' ? 'bg-danger' : 'bg-secondary' ?>">
+            <?= htmlspecialchars($s['role'] ?? '') ?>
+        </span>
+    </td>
+    <td><?= htmlspecialchars($s['ward_name'] ?? '—') ?></td>
+    <td><?= htmlspecialchars($s['username'] ?? '') ?></td>
+    <td><?= htmlspecialchars($s['email'] ?? '') ?></td>
+    <td class="text-center">
+        <?php if (($s['id'] ?? 0) != ($_SESSION['user_id'] ?? 0)): ?>
+            <form method="POST"
+                  action="delete_staff.php"
+                  class="d-inline"
+                  onsubmit="return confirm('Are you sure you want to delete this staff account?');">
+                <input type="hidden" name="user_id" value="<?= $s['id'] ?>">
+                <button class="btn btn-sm btn-outline-danger">
+                    Delete
+                </button>
+            </form>
+        <?php else: ?>
+            <span class="text-muted small">You</span>
+        <?php endif; ?>
+    </td>
+</tr>
+<?php endforeach; ?>
+
                     </tbody>
                 </table>
             </div>
@@ -97,3 +99,5 @@ $staff = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<?php include("../includes/footer.php"); ?>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../includes/db.php';
+include(__DIR__ . '/../includes/admin_header.php');
 
 
 
@@ -28,7 +29,7 @@ $wards = $pdo->query("SELECT * FROM wards ORDER BY ward_name ASC")->fetchAll(PDO
 
 <body class="bg-light">
 
-<?php include("../includes/header.php"); ?>
+
 
 <!-- PAGE CONTENT -->
 <div class="container py-4">
@@ -119,3 +120,5 @@ $wards = $pdo->query("SELECT * FROM wards ORDER BY ward_name ASC")->fetchAll(PDO
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<?php include("../includes/footer.php"); ?>
