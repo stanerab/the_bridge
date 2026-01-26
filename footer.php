@@ -1,44 +1,95 @@
-<footer id="mainFooter" class="fixed-bottom bg-white border-top d-flex justify-content-around py-2 transition-footer">
-  <a href="home.php" class="text-muted text-center">
-    <i class="bi bi-house-fill"></i><br>Home
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+
+}
+
+$currentPatientId = $_SESSION['current_patient_id'] ?? null;
+?>
+
+<div id="footer-spacer"></div>
+
+<footer id="mainFooter"
+        class="fixed-bottom bg-white border-top d-flex justify-content-around py-2 animated-footer">
+
+  <!-- Worker Home -->
+  <a href="/adhd_bridge/Admin_test/worker/dashboard.php" class="text-muted text-center">
+    <i class="bi bi-house"></i><br>Home
   </a>
-  <a href="toolkit.php" class="text-muted text-center">
-    <i class="bi bi-people"></i><br>Toolkit
-  </a>
-  <a href="chat.php" class="text-muted text-center">
-    <i class="bi bi-chat-dots"></i><br>Chat
-  </a>
+
+  <!-- Patient Dashboard -->
+  <?php if ($currentPatientId): ?>
+    <a href="home.php?uid=<?= $currentPatientId ?>" class="text-muted text-center">
+        <i class="bi bi-graph-up"></i><br>Dashboard
+    </a>
+  <?php else: ?>
+    <span class="text-muted text-center">
+        <i class="bi bi-graph-up"></i><br>Dashboard
+    </span>
+  <?php endif; ?>
+
+  <!-- Mood Toolkit -->
+  <?php if ($currentPatientId): ?>
+    <a href="toolkit.php?uid=<?= $currentPatientId ?>" class="text-muted text-center">
+        <i class="bi bi-emoji-smile"></i><br>Mood
+    </a>
+  <?php else: ?>
+    <span class="text-muted text-center">
+        <i class="bi bi-emoji-smile"></i><br>Mood
+    </span>
+  <?php endif; ?>
+
+  <!-- Notes / Chat -->
+  <?php if ($currentPatientId): ?>
+    <a href="chat.php?uid=<?= $currentPatientId ?>" class="text-muted text-center">
+        <i class="bi bi-chat-dots"></i><br>Notes
+    </a>
+  <?php else: ?>
+    <span class="text-muted text-center">
+        <i class="bi bi-chat-dots"></i><br>Notes
+    </span>
+  <?php endif; ?>
+
+  <!-- Menu -->
   <a href="menu.php" class="text-muted text-center">
-    <i class="bi bi-list"></i><br>Menu
+      <i class="bi bi-list"></i><br>Menu
   </a>
-</footer>
 
-<script>
-  let lastScrollTop = 0;
-  const footer = document.getElementById("mainFooter");
-  const scrollThreshold = 10; // minimal movement before triggering
+  <style>
+/* Space so content never hides under fixed footer */
+#footer-spacer {
+    height: 80px;
+}
 
-  window.addEventListener("scroll", () => {
-    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (Math.abs(currentScroll - lastScrollTop) <= scrollThreshold) return;
-
-    if (currentScroll > lastScrollTop) {
-      // Scrolling down
-      footer.style.transform = "translateY(100%)";
-    } else {
-      // Scrolling up
-      footer.style.transform = "translateY(0)";
+/* Mobile optimisation */
+@media (max-width: 576px) {
+    #footer-spacer {
+        height: 95px;   /* extra space for touch area */
     }
 
-    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-  });
-</script>
+    #mainFooter a,
+    #mainFooter span {
+        font-size: 0.75rem;
+    }
 
+    #mainFooter i {
+        font-size: 1.3rem;
+    }
+}
 
-<style>
-  .transition-footer {
-    transition: transform 0.3s ease-in-out;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
-  }
+/* Tablet */
+@media (min-width: 577px) and (max-width: 991px) {
+    #footer-spacer {
+        height: 85px;
+    }
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+    #footer-spacer {
+        height: 75px;
+    }
+}
 </style>
+
+
+</footer>

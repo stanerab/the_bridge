@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="ADHD Bridge helps adults with ADHD communicate better with their loved ones using structured mood tracking and empathy-based tools.">
-    <title>About Us - ADHD Bridge</title>
+        content="The Bridge helps adults with ADHD communicate better with their loved ones using structured mood tracking and empathy-based tools.">
+    <title>About Us - The Bridge</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -53,16 +53,24 @@
         }
 
         /* Fade-in animation */
-        [data-animate] {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.7s ease;
-        }
+       .values-section {
+    padding: 60px 20px;
+}
 
-        [data-animate].visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+.value-item {
+    text-align: center;
+    padding: 25px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    height: 100%;
+}
+
+.value-icon i {
+    font-size: 42px;
+    color: var(--primary);
+}
+
 
         .hero-section {
             background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg-color) 100%);
@@ -180,15 +188,45 @@
 </head>
 
 <body>
-    <?php include("header.php"); ?>
+   
+      <!-- Navbar with dark mode toggle on right -->
+  <nav class="navbar navbar-expand-md navbar-light bg-white py-2">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <!-- Left: Logo + Brand -->
+      <div class="d-flex align-items-center gap-2">
+        <a class="navbar-brand d-flex align-items-center" href="">
+          <!-- SVG Logo -->
+          <svg viewBox="0 0 100 100" width="36" height="36" role="img" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#FFD974" />
+                <stop offset="1" stop-color="#FFB4A2" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="50" fill="url(#g1)" />
+            <path d="M36 60c8-18 28-18 34-6" stroke="#6F42C1" stroke-width="6" stroke-linecap="round" fill="none" />
+          </svg>
+          <!-- Brand Name -->
+          <span class="ms-2 fw-bold text-dark">The Bridge</span>
+        </a>
+      </div>
+      <div class="col-md-4 text-md-end d-flex justify-content-end align-items-center gap-2">
+        <div class="d-inline-block focus-badge px-3 py-2 rounded-pill">
+          <small class="fw-medium"></small>
+        </div>
+        </a>
+      </div>
+    </div>
+  </nav>
 
 
     <section class="hero-section">
         <div class="container" data-animate>
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-4">
-                    <h1 class="display-5 fw-bold mb-4">About <span class="highlight">ADHD Bridge</span></h1>
-                    <p class="lead mb-3">Empowering adults with ADHD to express themselves and connect more effectively
+                    <h1 class="display-5 fw-bold mb-4">About <span class="highlight">The Bridge</span></h1>
+                    <p class="lead mb-3">Empowering adults with Neurodivergence to express themselves and connect more effectively
                         with their loved ones.</p>
                     <p class="text-muted">We provide structured tools and a supportive environment to bridge
                         communication gaps and strengthen relationships.</p>
@@ -203,7 +241,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8 text-center">
                     <p class="fs-5">We provide a <span class="highlight">safe, private, and user-friendly space</span>
-                        where adults with ADHD can share emotions, track moods, and communicate in a supportive
+                        where adults with Neurodivergence can share emotions, track moods, and communicate in a supportive
                         environment.</p>
                     <p>Our goal is to strengthen emotional bonds and create a world where neurodiverse voices are
                         understood and valued.</p>
@@ -246,8 +284,8 @@
                 </div>
                 <div class="col-lg-6">
                     <h2 class="section-title">Why It Matters</h2>
-                    <p>Communication is the foundation of empathy. With ADHD Bridge, adults can share thoughts openly
-                        and be heard — leading to healthier emotional well-being and closer family relationships.</p>
+                    <p>Communication is the foundation of empathy. With The Bridge, adults can share thoughts openly
+                        and be heard leading to healthier emotional well-being and closer family relationships.</p>
                     <div class="row mt-4">
                         <div class="col-6 mb-3 text-center">
                             <div class="stat-number">85%</div>
@@ -280,7 +318,7 @@
                     <div class="value-item">
                         <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
                         <h4>Privacy & Safety</h4>
-                        <p>Your data is always secure — transparency and protection are at the core of ADHD Bridge.</p>
+                        <p>Your data is always secure transparency and protection are at the core of ADHD Bridge.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -307,24 +345,27 @@
             <h2 class="mb-4">Ready to Improve Communication?</h2>
             <p class="fs-5 mb-4">Join ADHD Bridge today and begin building stronger, more understanding relationships.
             </p>
-            <a href="" class="btn btn-light-custom">Get Started</a>
+            <a href="register.php" class="btn btn-light-custom">Get Started</a>
         </div>
     </section>
 
-    <?php include("footer.php"); ?>
+   
 
-    <script>
-        // Simple scroll-triggered fade-in
-        const elements = document.querySelectorAll('[data-animate]');
-        const reveal = () => {
-            elements.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 100) el.classList.add('visible');
-            });
-        };
-        document.addEventListener('scroll', reveal);
-        window.addEventListener('load', reveal);
-    </script>
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const items = document.querySelectorAll("[data-animate]");
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+            }
+        });
+    }, { threshold: 0.2 });
+
+    items.forEach(item => observer.observe(item));
+});
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

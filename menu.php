@@ -1,4 +1,20 @@
-<?php include("header.php"); ?>
+<<?php
+session_start();
+include("header.php");
+
+// Store selected patient globally
+if (isset($_GET['uid']) && is_numeric($_GET['uid'])) {
+    $_SESSION['current_patient_id'] = (int) $_GET['uid'];
+}
+
+// Get active patient
+$service_user_id = $_SESSION['current_patient_id'] ?? null;
+
+if (!$service_user_id) {
+    echo "<div class='alert alert-danger'>No patient selected. Please return to dashboard.</div>";
+    exit;
+}
+?>
 
 <style>
   .menu-container {
@@ -181,7 +197,7 @@
             <div class="menu-icon">
               <i class="bi bi-info-circle"></i>
             </div>
-            <span>About ADHD Bridge</span>
+            <span>About The Bridge</span>
           </a>
         </div>
 

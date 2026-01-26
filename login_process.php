@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $user['username'];
 
             // Redirect to choose_role.php
-            header("Location: choose_role.php");
+            header("Location: home.php");
             exit;
         } else {
             // Password incorrect

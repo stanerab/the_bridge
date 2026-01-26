@@ -1,34 +1,57 @@
 <?php 
-include("header.php");
+include("header.php"); 
+include("connection.php");
 
-$mysqli = new mysqli("localhost", "root", "", "adhdbridge");
+// 1. Count insights
+$countResult = $conn->query("SELECT COUNT(*) AS total FROM insights");
+$total = ($countResult && $countResult->num_rows > 0)
+    ? $countResult->fetch_assoc()['total']
+    : 0;
 
-// 1. Try to get today's insight
-$result = $mysqli->query("
-    SELECT *
-    FROM insights
-    WHERE DATE(created_at) = CURDATE()
-    ORDER BY created_at DESC
-    LIMIT 1
-");
-$todayInsight = $result ? $result->fetch_assoc() : null;
+$todayInsight = null;
 
-// 2. If none exists for today, fallback to the latest insight
+if ($total > 0) {
+    // Get today's day index (0–365)
+    $dayIndex = date('z') % $total;
+
+    // Fetch the insight for today
+    $query = "
+        SELECT *
+        FROM insights
+        ORDER BY id ASC
+        LIMIT 1 OFFSET $dayIndex
+    ";
+    $result = $conn->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        $todayInsight = $result->fetch_assoc();
+    }
+}
+
+// 2. Fallback: If no insight chosen, use the newest one
 if (!$todayInsight) {
-    $fallback = $mysqli->query("
+    $fallback = $conn->query("
         SELECT *
         FROM insights
         ORDER BY created_at DESC
         LIMIT 1
     ");
-    $todayInsight = $fallback ? $fallback->fetch_assoc() : null;
+
+    if ($fallback && $fallback->num_rows > 0) {
+        $todayInsight = $fallback->fetch_assoc();
+    }
 }
 
-// 3. Count all insights for stats
-$countQuery = $mysqli->query("SELECT COUNT(*) AS total FROM insights");
-$countRow = $countQuery ? $countQuery->fetch_assoc() : ['total' => 0];
+// 3. Count all insights
+$countQuery = $conn->query("SELECT COUNT(*) AS total FROM insights");
+$countRow = ($countQuery && $countQuery->num_rows > 0)
+    ? $countQuery->fetch_assoc()
+    : ['total' => 0];
+
 $totalInsights = $countRow['total'];
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -299,7 +322,7 @@ $totalInsights = $countRow['total'];
                 <i class="fas fa-brain text-primary me-2"></i>Daily Insights
             </h1>
             <p class="hero-subtitle" style="color: #718096; max-width: 600px; margin: 0 auto;">
-                Track your progress with clear, focused reflections. One insight at a time.
+                Track your progress with clear, focused reflections.
             </p>
         </div>
     </div>
@@ -388,14 +411,51 @@ $totalInsights = $countRow['total'];
                             <i class="fas fa-share-alt"></i>
                         </button>
 
-                        <ul class="dropdown-menu share-dropdown-menu">
-                            <li><a class="dropdown-item share-option" href="#" data-method="clipboard"><i class="fas fa-copy me-2"></i> Copy to Clipboard</a></li>
-                            <li><a class="dropdown-item share-option" href="#" data-method="twitter"><i class="fab fa-twitter me-2"></i> Share on Twitter</a></li>
-                            <li><a class="dropdown-item share-option" href="#" data-method="facebook"><i class="fab fa-facebook me-2"></i> Share on Facebook</a></li>
-                            <li><a class="dropdown-item share-option" href="#" data-method="whatsapp"><i class="fab fa-whatsapp me-2"></i> Share on WhatsApp</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item share-option" href="#" data-method="native"><i class="fas fa-share-square me-2"></i> Share via...</a></li>
-                        </ul>
+                     <ul class="dropdown-menu share-dropdown-menu">
+    <!-- Copy link (still needs JS) -->
+    <li>
+        <a class="dropdown-item" href="#" onclick="copyPageLink()">
+            <i class="fas fa-copy me-2"></i> Copy to Clipboard
+        </a>
+    </li>
+
+    <!-- Twitter / X -->
+    <li>
+        <a class="dropdown-item"
+           href="https://twitter.com/intent/tweet?url=https://example.com&text=Check%20this%20out"
+           target="_blank">
+            <i class="fab fa-twitter me-2"></i> Share on Twitter
+        </a>
+    </li>
+
+    <!-- Facebook -->
+    <li>
+        <a class="dropdown-item"
+           href="https://www.facebook.com/sharer/sharer.php?u=https://example.com"
+           target="_blank">
+            <i class="fab fa-facebook me-2"></i> Share on Facebook
+        </a>
+    </li>
+
+    <!-- WhatsApp -->
+    <li>
+        <a class="dropdown-item"
+           href="https://wa.me/?text=Check%20this%20out%20https://example.com"
+           target="_blank">
+            <i class="fab fa-whatsapp me-2"></i> Share on WhatsApp
+        </a>
+    </li>
+
+    <li><hr class="dropdown-divider"></li>
+
+    <!-- Native share (mobile browsers only) -->
+    <li>
+        <a class="dropdown-item" href="#" onclick="nativeShare()">
+            <i class="fas fa-share-square me-2"></i> Share via...
+        </a>
+    </li>
+</ul>
+
                     </div>
                 </div>
             </div>
@@ -427,7 +487,38 @@ $totalInsights = $countRow['total'];
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+        <script>
+const pageUrl = encodeURIComponent(window.location.href);
+const pageTitle = encodeURIComponent(document.title);
+
+// Update links dynamically
+document.querySelector('a[href*="twitter.com"]').href =
+    `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
+
+document.querySelector('a[href*="facebook.com"]').href =
+    `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+
+document.querySelector('a[href*="wa.me"]').href =
+    `https://wa.me/?text=${pageTitle}%20${pageUrl}`;
+
+// Copy to clipboard
+function copyPageLink() {
+    navigator.clipboard.writeText(window.location.href)
+        .then(() => alert("Link copied to clipboard"));
+}
+
+// Native share (mobile)
+function nativeShare() {
+    if (navigator.share) {
+        navigator.share({
+            title: document.title,
+            url: window.location.href
+        });
+    } else {
+        alert("Native sharing not supported on this device");
+    }
+}
+
     document.addEventListener('DOMContentLoaded', function() {
         const body = document.body;
         const motionToggle = document.getElementById('reduceMotionToggle');

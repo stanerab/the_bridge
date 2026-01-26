@@ -1,11 +1,36 @@
-<?php include_once('connection.php'); ?>
+<?php
+include_once('connection.php');
+
+date_default_timezone_set('Europe/London');
+
+if (!function_exists('timeAgo')) {
+    function timeAgo($datetime) {
+        if (!$datetime) return '';
+
+        $dbTime = new DateTime($datetime, new DateTimeZone('UTC'));
+        $dbTime->setTimezone(new DateTimeZone(date_default_timezone_get()));
+
+        $now = new DateTime('now', new DateTimeZone(date_default_timezone_get()));
+        $diff = $now->getTimestamp() - $dbTime->getTimestamp();
+
+        if ($diff < 0) return 'just now';
+        if ($diff < 60) return 'just now';
+        if ($diff < 3600) return floor($diff / 60) . ' minutes ago';
+        if ($diff < 86400) return floor($diff / 3600) . ' hours ago';
+        if ($diff < 604800) return floor($diff / 86400) . ' days ago';
+
+        return $dbTime->format('j M Y, H:i');
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ADHD Bridge</title>
+  <title>The Bridge</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="/css/style.css" />
@@ -106,7 +131,7 @@
 
       <!-- Left: Logo + Brand -->
       <div class="d-flex align-items-center gap-2">
-        <a class="navbar-brand d-flex align-items-center" href="#">
+        <a class="navbar-brand d-flex align-items-center" href="home.php">
           <!-- SVG Logo -->
           <svg viewBox="0 0 100 100" width="36" height="36" role="img" aria-hidden="true">
             <defs>
@@ -119,7 +144,7 @@
             <path d="M36 60c8-18 28-18 34-6" stroke="#6F42C1" stroke-width="6" stroke-linecap="round" fill="none" />
           </svg>
           <!-- Brand Name -->
-          <span class="ms-2 fw-bold text-dark">ADHD Bridge</span>
+          <span class="ms-2 fw-bold text-dark">The Bridge</span>
         </a>
       </div>
       <div class="col-md-4 text-md-end d-flex justify-content-end align-items-center gap-2">

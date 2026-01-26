@@ -75,7 +75,6 @@ if (!isset($_SESSION['user_id'])) {
   }
 </style>
 
-<!-- Welcome Section - Original Layout -->
 <section class="text-center py-5 bg-light min-vh-100 d-flex flex-column justify-content-center">
   <div class="container">
     <h1 class="display-5 fw-bold mb-3">Welcome to <span class="text-purple">ADHD Bridge</span></h1>

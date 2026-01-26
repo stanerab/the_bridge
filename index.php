@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ADHD Bridge — Landing</title>
+  <title>The Bridge — Landing</title>
 
   <!-- Fonts -->
   <link
@@ -509,7 +509,7 @@
               <path d="M36 60c8-18 28-18 34-6" stroke="#6F42C1" stroke-width="6" stroke-linecap="round" fill="none" />
             </svg>
           </div>
-          <div class="brand">ADHD Bridge</div>
+          <div class="brand">The Bridge</div>
         </div>
 
         <div class="d-flex align-items-center gap-2">
@@ -536,8 +536,8 @@
   <section class="hero">
     <div class="glass" role="region" aria-labelledby="heroTitle">
       <div>
-        <h1 id="heroTitle" class="hero-title">Welcome to <span style="color:var(--accent)">ADHD Bridge</span></h1>
-        <p class="hero-sub">Tools and gentle structure to help adults with ADHD communicate more clearly with family and
+        <h1 id="heroTitle" class="hero-title">Welcome to <span style="color:var(--accent)">The Bridge</span></h1>
+        <p class="hero-sub">Tools and gentle structure to help adults with Neurodivergence communicate more clearly with family and
           feel understood.</p>
 
         <div class="hero-controls">
@@ -634,56 +634,6 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section class="testimonials">
-    <div class="container">
-      <h2 class="text-center mb-5">Trusted by ADHD Adults Worldwide</h2>
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="testimonial-card p-4 rounded-3 h-100">
-            <div class="stars mb-3">⭐⭐⭐⭐⭐</div>
-            <p class="mb-3">"Finally, a tool that understands how my brain works. The guided conversations have
-              transformed how I communicate with my partner."</p>
-            <div class="d-flex align-items-center">
-              <div class="avatar-placeholder rounded-circle bg-primary me-3" style="width: 40px; height: 40px;"></div>
-              <div>
-                <strong>Sarah M.</strong>
-                <div class="small opacity-75">User for 6 months</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="testimonial-card p-4 rounded-3 h-100">
-            <div class="stars mb-3">⭐⭐⭐⭐⭐</div>
-            <p class="mb-3">"The daily check-ins take 2 minutes but have given me insights I've missed for years.
-              Game-changer."</p>
-            <div class="d-flex align-items-center">
-              <div class="avatar-placeholder rounded-circle bg-success me-3" style="width: 40px; height: 40px;"></div>
-              <div>
-                <strong>James T.</strong>
-                <div class="small opacity-75">User for 3 months</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="testimonial-card p-4 rounded-3 h-100">
-            <div class="stars mb-3">⭐⭐⭐⭐⭐</div>
-            <p class="mb-3">"Privacy-focused and ADHD-friendly. Finally, an app that doesn't overwhelm me with
-              notifications."</p>
-            <div class="d-flex align-items-center">
-              <div class="avatar-placeholder rounded-circle bg-warning me-3" style="width: 40px; height: 40px;"></div>
-              <div>
-                <strong>Alex K.</strong>
-                <div class="small opacity-75">User for 1 year</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- STATISTICS -->
   <section class="stats">
@@ -816,7 +766,7 @@
       <p class="lead mb-4">Join thousands of ADHD adults finding clarity and connection.</p>
       <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
         <a href="register.php" class="btn btn-light btn-lg px-4 py-2 fw-bold">Start Your Free Trial</a>
-        <a href="#featuresSection" class="btn btn-outline-light btn-lg px-4 py-2">Learn More</a>
+        <a href="about.php" class="btn btn-outline-light btn-lg px-4 py-2">Learn More</a>
       </div>
       <div class="mt-3 small opacity-75">
         No credit card required • 30-day free trial • Cancel anytime

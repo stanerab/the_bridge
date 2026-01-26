@@ -1,26 +1,67 @@
 <?php
-// --- DATABASE CONNECTION ---
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "adhdbridge";
-
-$conn = new mysqli($host, $user, $pass, $db);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+session_start();
+if (isset($_GET['uid']) && is_numeric($_GET['uid'])) {
+    $_SESSION['current_patient_id'] = (int) $_GET['uid'];
 }
 
-// --- DEFAULT $result SO IT ALWAYS EXISTS ---
+$service_user_id = $_SESSION['current_patient_id'] ?? null;
+
+if (!$service_user_id) {
+    echo "No patient selected.";
+    exit;
+}
+
+
+$allowed_roles = ['support_worker','nurse','clinician','ward_manager','admin'];
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $allowed_roles)) {
+    die("Access denied.");
+}
+
+// Get patient ID
+$service_user_id = isset($_GET['uid']) ? (int)$_GET['uid'] : 0;
+if ($service_user_id <= 0) {
+    die("Invalid patient.");
+}
+$_SESSION['current_patient_id'] = $service_user_id;
+
+
+// Enable debugging (remove in production)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Auto-detect Localhost vs Live
+if (in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1', '::1'])) {
+    $host = "localhost";
+    $user = "root";
+    $pass = "";
+    $db   = "adhdbridge";
+} else {
+    $host = "sql100.infinityfree.com";
+    $user = "if0_40168601";
+    $pass = "Stanleyson00"; 
+    $db   = "if0_40168601_adhdbridge";
+}
+
+// Connect DB
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("DB Connection failed: " . $conn->connect_error);
+}
+
+// --- DEFAULT RESULT ---
 $result = null;
 
-// --- FETCH FROM mood TABLE (ADJUST COLUMN NAMES IF NEEDED) ---
-$sql = "SELECT * FROM mood_table ORDER BY created_at DESC LIMIT 5";
-$queryResult = $conn->query($sql);
-
-if ($queryResult) {
-    $result = $queryResult;
-}
+// --- FETCH LATEST MOODS FOR THIS PATIENT ONLY ---
+$stmt = $conn->prepare("
+    SELECT *
+    FROM mood_table
+    WHERE service_user_id = ?
+    ORDER BY created_at DESC
+    LIMIT 5
+");
+$stmt->bind_param("i", $service_user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 // --- timeAgo FUNCTION ---
 function timeAgo($datetime)
@@ -28,16 +69,14 @@ function timeAgo($datetime)
     $time = strtotime($datetime);
     $diff = time() - $time;
 
-    if ($diff < 60)
-        return $diff . "s ago";
-    elseif ($diff < 3600)
-        return floor($diff / 60) . "m ago";
-    elseif ($diff < 86400)
-        return floor($diff / 3600) . "h ago";
-    else
-        return floor($diff / 86400) . "d ago";
+    if ($diff < 60) return $diff . "s ago";
+    if ($diff < 3600) return floor($diff / 60) . "m ago";
+    if ($diff < 86400) return floor($diff / 3600) . "h ago";
+    return floor($diff / 86400) . "d ago";
 }
 ?>
+
+
 
 <?php include("header.php"); ?>
 
@@ -175,8 +214,8 @@ function timeAgo($datetime)
         <div class="welcome-section">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1 class="display-6 fw-bold mb-2">Welcome back, Stanley 👋</h1>
-                    <p class="lead mb-0 opacity-90">Track your moods, gain insights, and communicate with clarity.</p>
+                    <h1 class="display-6 fw-bold mb-2">Welcome!👋</h1>
+                    <p class="lead mb-0 opacity-90">Monitor patient mood trends, gain clinical insight, and support clearer communication.</p>
                 </div>
                 <div class="col-md-4 text-md-end">
     <div class="d-inline-block">
@@ -210,9 +249,9 @@ function timeAgo($datetime)
         <p class="text-muted small">Use visual countdowns and structured timers to stay focused.</p>
     </div>
 
-    <!-- ✅ DYNAMIC RECENT MOODS -->
+    <!--  DYNAMIC RECENT MOODS -->
     <div class="bg-white p-3 shadow-sm rounded">
-        <h5><i class="fa-solid fa-user-group text-info"></i> Recent Conversations</h5>
+        <h5><i class="fa-solid fa-user-group text-info"></i> Recent moods and notes.</h5>
         <ul class="list-unstyled mb-0 small">
 
             <?php if ($result && $result->num_rows > 0): ?>
@@ -238,104 +277,9 @@ function timeAgo($datetime)
     </div>
 </div>
 
-
-            <!-- RIGHT COLUMN - Professional Charts -->
-            <div class="col-lg-8">
-                <?php
-                include_once('connection.php');
-                $mysqli = $conn;
-
-                if ($mysqli->connect_error) {
-                    die("Connection failed: " . $mysqli->connect_error);
-                }
-
-                // Mood Colors
-                $moodColors = [
-                    'Angry' => '#dc3545',
-                    'Sad' => '#0d6efd',
-                    'Neutral' => '#6c757d',
-                    'Okay' => '#0dcaf0',
-                    'Happy' => '#198754'
-                ];
-
-                // Average Mood (last 7 days)
-                $avgMoodQuery = $mysqli->query("
-                    SELECT entry_date, AVG(
-                        CASE mood
-                            WHEN 'Angry' THEN 1
-                            WHEN 'Sad' THEN 2
-                            WHEN 'Neutral' THEN 3
-                            WHEN 'Okay' THEN 4
-                            WHEN 'Happy' THEN 5
-                        END
-                    ) AS avg_mood
-                    FROM mood_table
-                    WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-                    GROUP BY entry_date
-                    ORDER BY entry_date
-                ");
-
-                $avgMoodLabels = $avgMoodData = [];
-                while ($r = $avgMoodQuery->fetch_assoc()) {
-                    $avgMoodLabels[] = date('M j', strtotime($r['entry_date']));
-                    $avgMoodData[] = round($r['avg_mood'], 2);
-                }
-
-                // Mood Distribution (Donut Chart, last 7 days)
-                $moodDistQuery = $mysqli->query("
-                    SELECT mood, COUNT(*) AS count
-                    FROM mood_table
-                    WHERE entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-                    GROUP BY mood
-                ");
-
-                $moodDistLabels = $moodDistData = $moodDistColors = [];
-                while ($r = $moodDistQuery->fetch_assoc()) {
-                    $moodDistLabels[] = $r['mood'];
-                    $moodDistData[] = $r['count'];
-                    $moodDistColors[] = $moodColors[$r['mood']];
-                }
-
-                // Average Mood by Weekday
-                $weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-                $dayPatternQuery = $mysqli->query("
-                    SELECT DAYNAME(entry_date) AS day, AVG(
-                        CASE mood
-                            WHEN 'Angry' THEN 1
-                            WHEN 'Sad' THEN 2
-                            WHEN 'Neutral' THEN 3
-                            WHEN 'Okay' THEN 4
-                            WHEN 'Happy' THEN 5
-                        END
-                    ) AS avg_mood
-                    FROM mood_table
-                    GROUP BY DAYNAME(entry_date)
-                ");
-
-                $dbDayData = [];
-                while ($r = $dayPatternQuery->fetch_assoc()) {
-                    $dbDayData[$r['day']] = round($r['avg_mood'], 2);
-                }
-
-                $dayLabels = $dayData = $dayColors = [];
-                foreach ($weekDays as $day) {
-                    $dayLabels[] = substr($day, 0, 3);
-                    $dayData[] = isset($dbDayData[$day]) ? $dbDayData[$day] : null;
-
-                    $freqQuery = $mysqli->query("
-                        SELECT mood, COUNT(*) AS count
-                        FROM mood_table
-                        WHERE DAYNAME(entry_date) = '$day'
-                        GROUP BY mood
-                        ORDER BY count DESC
-                        LIMIT 1
-                    ");
-                    $freq = $freqQuery->fetch_assoc();
-                    $dayColors[] = $freq ? $moodColors[$freq['mood']] : '#6f42c1';
-                }
-                ?>
-
+<!-- RIGHT COLUMN - Professional Charts -->
+<div class="col-lg-8">
+    
                 <!-- Professional Chart Tabs -->
                 <ul class="nav nav-tabs-custom" id="chartTabs" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -395,6 +339,162 @@ function timeAgo($datetime)
             </div>
         </div>
     </div>
+<?php
+include_once('connection.php');
+$mysqli = $conn;
+
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+$service_user_id = isset($service_user_id) ? (int)$service_user_id : 0;
+if ($service_user_id <= 0) {
+    die("No patient selected for graphs.");
+}
+
+/* ===========================
+   Mood Colour Map (LOWERCASE)
+   =========================== */
+$moodColors = [
+    'angry'   => '#dc3545',
+    'sad'     => '#0d6efd',
+    'neutral' => '#6c757d',
+    'okay'    => '#0dcaf0',
+    'happy'   => '#198754'
+];
+
+/* ===========================
+   1. Average Mood (Last 7 Days)
+   =========================== */
+$avgMoodStmt = $mysqli->prepare("
+    SELECT entry_date,
+           AVG(
+               CASE mood
+                   WHEN 'angry' THEN 1
+                   WHEN 'sad' THEN 2
+                   WHEN 'neutral' THEN 3
+                   WHEN 'okay' THEN 4
+                   WHEN 'happy' THEN 5
+               END
+           ) AS avg_mood
+    FROM mood_table
+    WHERE service_user_id = ?
+      AND entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+    GROUP BY entry_date
+    ORDER BY entry_date
+");
+$avgMoodStmt->bind_param("i", $service_user_id);
+$avgMoodStmt->execute();
+$avgMoodResult = $avgMoodStmt->get_result();
+
+$avgMoodLabels = [];
+$avgMoodData   = [];
+
+while ($r = $avgMoodResult->fetch_assoc()) {
+    $avgMoodLabels[] = date('M j', strtotime($r['entry_date']));
+    $avgMoodData[]   = $r['avg_mood'] !== null ? round($r['avg_mood'], 2) : null;
+}
+
+/* ===========================
+   2. Mood Distribution (Donut)
+   =========================== */
+$moodDistCounts = [
+    'happy'   => 0,
+    'okay'    => 0,
+    'neutral' => 0,
+    'sad'     => 0,
+    'angry'   => 0
+];
+
+$distStmt = $mysqli->prepare("
+    SELECT mood, COUNT(*) AS count
+    FROM mood_table
+    WHERE service_user_id = ?
+      AND entry_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+    GROUP BY mood
+");
+$distStmt->bind_param("i", $service_user_id);
+$distStmt->execute();
+$distResult = $distStmt->get_result();
+
+while ($r = $distResult->fetch_assoc()) {
+    $mood = strtolower(trim($r['mood']));
+    if (isset($moodDistCounts[$mood])) {
+        $moodDistCounts[$mood] = (int)$r['count'];
+    }
+}
+
+$moodDistLabels = [];
+$moodDistData   = [];
+$moodDistColors = [];
+
+foreach ($moodDistCounts as $mood => $count) {
+    if ($count > 0) {
+        $moodDistLabels[] = ucfirst($mood);
+        $moodDistData[]   = $count;
+        $moodDistColors[] = $moodColors[$mood];
+    }
+}
+
+/* ===========================
+   3. Average Mood by Weekday (Corrected)
+   =========================== */
+
+$weekDays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+$dayStmt = $mysqli->prepare("
+    SELECT 
+        DAYNAME(entry_date) AS day,
+        AVG(mood_value) AS avg_mood
+    FROM mood_table
+    WHERE service_user_id = ?
+      AND YEARWEEK(entry_date, 1) = YEARWEEK(CURDATE(), 1)
+    GROUP BY DAYOFWEEK(entry_date), DAYNAME(entry_date)
+    ORDER BY DAYOFWEEK(entry_date)
+");
+
+$dayStmt->bind_param("i", $service_user_id);
+$dayStmt->execute();
+$dayResult = $dayStmt->get_result();
+
+$dbDayData = [];
+while ($r = $dayResult->fetch_assoc()) {
+    $dbDayData[$r['day']] = round((float)$r['avg_mood'], 2);
+}
+
+$dayLabels = [];
+$dayData   = [];
+$dayColors = [];
+
+foreach ($weekDays as $day) {
+    $dayLabels[] = substr($day, 0, 3);
+    $dayData[] = array_key_exists($day, $dbDayData) ? $dbDayData[$day] : null;
+
+
+    // Most frequent mood for colouring
+    $freqStmt = $mysqli->prepare("
+        SELECT mood, COUNT(*) AS count
+        FROM mood_table
+        WHERE service_user_id = ?
+          AND DAYNAME(entry_date) = ?
+        GROUP BY mood
+        ORDER BY count DESC
+        LIMIT 1
+    ");
+    $freqStmt->bind_param("is", $service_user_id, $day);
+    $freqStmt->execute();
+    $freqResult = $freqStmt->get_result();
+    $freq = $freqResult->fetch_assoc();
+
+    $freqMood = $freq ? strtolower($freq['mood']) : null;
+    $dayColors[] = ($freqMood && isset($moodColors[$freqMood]))
+        ? $moodColors[$freqMood]
+        : '#6f42c1';
+}
+
+?>
+    
+</div>
+
 
     <script>
         // Line Chart - Average Mood Trends
