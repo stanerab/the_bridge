@@ -151,10 +151,6 @@ if (!function_exists('timeAgo')) {
     <!-- Right: Theme + User Info -->
     <div class="d-flex align-items-center gap-3">
 
-      <!-- Dark mode toggle -->
-      <button id="themeToggleBtn" class="btn btn-sm btn-outline-dark" title="Toggle theme">
-        <i class="bi bi-sun fade-icon"></i>
-      </button>
 
       <!-- User info -->
       <div class="text-end">
@@ -166,11 +162,25 @@ if (!function_exists('timeAgo')) {
       <span class="role-badge">
         <?= htmlspecialchars(ucfirst(str_replace('_', ' ', $_SESSION['role']))) ?>
       </span>
+<div class="d-flex align-items-center gap-3">
 
-      <!-- Logout -->
-      <a href="../logout.php" class="btn btn-outline-danger btn-sm">
-        <i class="bi bi-box-arrow-right me-1"></i>Logout
-      </a>
+    <!-- Dark Mode Toggle -->
+    <button id="themeToggleBtn"
+            class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center"
+            title="Toggle theme"
+            style="width:38px; height:38px;">
+        <i class="bi bi-sun fade-icon"></i>
+    </button>
+
+    <!-- Menu Button -->
+    <a href="../../menu.php"
+       class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center"
+       title="Menu"
+       style="width:38px; height:38px;">
+        <i class="bi bi-list"></i>
+    </a>
+</div>
+
 
     </div>
 

@@ -323,7 +323,7 @@ $recentMoodCount = $recentMoods['recent_count'] ?? 0;
                         <i class="bi bi-people me-2"></i>Service Users in Your Ward
                     </h5>
                     <span class="badge bg-primary">
-                        <?= htmlspecialchars($patientCount) ?> user<?= $patientCount != 1 ? 's' : '' ?>
+                        <?= htmlspecialchars($patientCount) ?> Active service users<?= $patientCount != 1 ? 's' : '' ?>
                     </span>
                 </div>
                 

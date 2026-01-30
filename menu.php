@@ -7,13 +7,6 @@ if (isset($_GET['uid']) && is_numeric($_GET['uid'])) {
     $_SESSION['current_patient_id'] = (int) $_GET['uid'];
 }
 
-// Get active patient
-$service_user_id = $_SESSION['current_patient_id'] ?? null;
-
-if (!$service_user_id) {
-    echo "<div class='alert alert-danger'>No patient selected. Please return to dashboard.</div>";
-    exit;
-}
 ?>
 
 <style>
@@ -216,7 +209,7 @@ if (!$service_user_id) {
 
         <!-- Logout Link -->
         <div class="menu-item logout-item">
-          <a href="logout.php" class="menu-link">
+          <a href="Admin_test/logout.php" class="menu-link">
             <div class="menu-icon">
               <i class="bi bi-box-arrow-right"></i>
             </div>
@@ -225,7 +218,7 @@ if (!$service_user_id) {
         </div>
       </div>
     </div>
-
+   
     <!-- Accessibility Toggle -->
     <button id="fontToggle" class="btn accessibility-toggle w-100">
       <i class="bi bi-fonts accessibility-icon"></i>

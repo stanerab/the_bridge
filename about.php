@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="The Bridge helps adults with ADHD communicate better with their loved ones using structured mood tracking and empathy-based tools.">
+        content="The Bridge is a clinical communication and mood documentation platform designed for hospital wards and supported care environments.">
     <title>About Us - The Bridge</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,36 +13,15 @@
 
     <style>
         :root {
-            --primary: #6f42c1;
-            --primary-light: #f0e6ff;
+            --primary: #0d6efd;
+            --primary-light: #e7f1ff;
             --secondary: #6c757d;
-            --dark: #212529;
+            --dark: #1e293b;
             --light: #f8f9fa;
-            --accent: #8b5cf6;
             --bg-color: #ffffff;
             --text-color: #212529;
             --card-bg: #ffffff;
             --border-color: rgba(0, 0, 0, 0.05);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #121212;
-                --text-color: #e9ecef;
-                --card-bg: #1e1e1e;
-                --primary-light: #1e0d3a;
-                --secondary: #adb5bd;
-                --border-color: rgba(255, 255, 255, 0.05);
-            }
-        }
-
-        [data-bs-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #e9ecef;
-            --card-bg: #1e1e1e;
-            --primary-light: #1e0d3a;
-            --secondary: #adb5bd;
-            --border-color: rgba(255, 255, 255, 0.05);
         }
 
         body {
@@ -52,35 +31,14 @@
             background-color: var(--bg-color);
         }
 
-        /* Fade-in animation */
-       .values-section {
-    padding: 60px 20px;
-}
-
-.value-item {
-    text-align: center;
-    padding: 25px;
-    background: var(--card-bg);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    height: 100%;
-}
-
-.value-icon i {
-    font-size: 42px;
-    color: var(--primary);
-}
-
-
         .hero-section {
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg-color) 100%);
+            background: linear-gradient(135deg, var(--primary-light) 0%, #ffffff 100%);
             padding: 4rem 0 3rem;
             border-bottom: 1px solid var(--border-color);
         }
 
         .section-title {
             font-weight: 700;
-            color: var(--text-color);
             margin-bottom: 2rem;
             position: relative;
         }
@@ -89,8 +47,7 @@
             content: '';
             position: absolute;
             bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
             width: 60px;
             height: 4px;
             background: var(--primary);
@@ -108,46 +65,38 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
             padding: 2rem;
             height: 100%;
-            border-top: 4px solid var(--primary);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.2s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
         }
 
         .feature-icon {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--primary);
             margin-bottom: 1rem;
         }
 
-        .mission-section {
-            background-color: var(--primary-light);
+        .values-section {
+            background: #f9fbff;
             padding: 4rem 0;
         }
 
         .value-item {
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 2rem;
         }
 
         .value-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--primary-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
             font-size: 2rem;
             color: var(--primary);
+            margin-bottom: 1rem;
         }
 
         .cta-section {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            background: var(--primary);
             color: white;
             padding: 4rem 1rem;
             border-radius: 16px;
@@ -155,23 +104,8 @@
             margin: 3rem 0;
         }
 
-        .btn-light-custom {
-            background: white;
-            color: var(--primary);
-            font-weight: 600;
-            padding: 0.75rem 2rem;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-light-custom:hover {
-            background: #f8f5ff;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--primary);
         }
@@ -180,194 +114,241 @@
             color: var(--secondary);
             font-weight: 500;
         }
-
-        .text-muted {
-            color: var(--secondary) !important;
-        }
     </style>
 </head>
 
 <body>
-   
-      <!-- Navbar with dark mode toggle on right -->
-  <nav class="navbar navbar-expand-md navbar-light bg-white py-2">
-    <div class="container d-flex align-items-center justify-content-between">
 
-      <!-- Left: Logo + Brand -->
-      <div class="d-flex align-items-center gap-2">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-md navbar-light bg-white py-2 shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
         <a class="navbar-brand d-flex align-items-center" href="Admin_test/worker/dashboard.php">
-          <!-- SVG Logo -->
-          <svg viewBox="0 0 100 100" width="36" height="36" role="img" aria-hidden="true">
-            <defs>
-              <linearGradient id="g1" x1="0" x2="1">
-                <stop offset="0" stop-color="#FFD974" />
-                <stop offset="1" stop-color="#FFB4A2" />
-              </linearGradient>
-            </defs>
-            <circle cx="50" cy="50" r="50" fill="url(#g1)" />
-            <path d="M36 60c8-18 28-18 34-6" stroke="#6F42C1" stroke-width="6" stroke-linecap="round" fill="none" />
-          </svg>
-          <!-- Brand Name -->
-          <span class="ms-2 fw-bold text-dark">The Bridge</span>
+            <!-- SVG Logo -->
+            <svg viewBox="0 0 100 100" width="36" height="36">
+                <defs>
+                    <linearGradient id="g1" x1="0" x2="1">
+                        <stop offset="0" stop-color="#FFD974" />
+                        <stop offset="1" stop-color="#FFB4A2" />
+                    </linearGradient>
+                </defs>
+                <circle cx="50" cy="50" r="50" fill="url(#g1)" />
+                <path d="M36 60c8-18 28-18 34-6"
+                    stroke="#0d6efd"
+                    stroke-width="6"
+                    stroke-linecap="round"
+                    fill="none" />
+            </svg>
+            <span class="ms-2 fw-bold">The Bridge</span>
         </a>
-      </div>
-      <div class="col-md-4 text-md-end d-flex justify-content-end align-items-center gap-2">
-        <div class="d-inline-block focus-badge px-3 py-2 rounded-pill">
-          <small class="fw-medium"></small>
-        </div>
-        </a>
-      </div>
     </div>
-  </nav>
+</nav>
 
+<!-- HERO -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-4">About <span class="highlight">The Bridge</span></h1>
+        <p class="lead">
+            A structured digital communication and mood documentation platform designed for hospital wards,
+            supported living services, and clinical environments.
+        </p>
+        <p class="text-muted">
+            The Bridge enables healthcare professionals to document emotional wellbeing, monitor mood patterns,
+            and enhance therapeutic communication within secure care settings.
+        </p>
+    </div>
+</section>
 
-    <section class="hero-section">
-        <div class="container" data-animate>
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4">
-                    <h1 class="display-5 fw-bold mb-4">About <span class="highlight">The Bridge</span></h1>
-                    <p class="lead mb-3">Empowering adults with Neurodivergence to express themselves and connect more effectively
-                        with their loved ones.</p>
-                    <p class="text-muted">We provide structured tools and a supportive environment to bridge
-                        communication gaps and strengthen relationships.</p>
+<!-- MISSION -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title">Our Clinical Mission</h2>
+        <p class="fs-5">
+            The Bridge provides a <span class="highlight">secure and clinically-aligned system</span> for recording
+            emotional wellbeing, supporting structured communication, and improving visibility of patient mood trends.
+        </p>
+        <p>
+            Our goal is to support multidisciplinary teams, enhance documentation quality,
+            and improve emotional insight within hospital and supported care environments.
+        </p>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Core Capabilities</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-notes-medical"></i></div>
+                    <h5>Structured Mood Documentation</h5>
+                    <p>
+                        Enables healthcare staff to record mood observations and clinical notes
+                        in a consistent, measurable format.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-hospital-user"></i></div>
+                    <h5>Ward-Based Communication</h5>
+                    <p>
+                        Supports improved communication between staff and patients,
+                        reducing misunderstandings and improving care engagement.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h5>Data-Driven Insights</h5>
+                    <p>
+                        Visual trends and reports assist with care planning,
+                        reviews, and clinical decision-making.
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="mission-section">
-        <div class="container" data-animate>
-            <h2 class="section-title center text-center">Our Mission</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-8 text-center">
-                    <p class="fs-5">We provide a <span class="highlight">safe, private, and user-friendly space</span>
-                        where adults with Neurodivergence can share emotions, track moods, and communicate in a supportive
-                        environment.</p>
-                    <p>Our goal is to strengthen emotional bonds and create a world where neurodiverse voices are
-                        understood and valued.</p>
-                </div>
-            </div>
+<!-- WHY IT MATTERS -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title">Why It Matters in Clinical Care</h2>
+        <p>
+            Emotional wellbeing significantly impacts patient outcomes.
+            The Bridge improves visibility of mood changes,
+            supports proactive interventions,
+            and strengthens structured care documentation.
+        </p>
 
-            <div class="row mt-5">
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card text-center">
-                        <div class="feature-icon"><i class="fas fa-heart"></i></div>
-                        <h4>Emotional Support</h4>
-                        <p>Helping users identify and express emotions through structured, compassionate tools.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card text-center">
-                        <div class="feature-icon"><i class="fas fa-comments"></i></div>
-                        <h4>Better Communication</h4>
-                        <p>Empowering families and individuals to build clearer, more meaningful conversations.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card text-center">
-                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
-                        <h4>Progress Tracking</h4>
-                        <p>Monitor growth, emotional trends, and improvements in understanding over time.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="row mt-4 text-center">
+    <div class="col-md-3 mb-3">
+        <div class="stat-number">
+            <span class="counter" data-target="40">0</span>%
         </div>
-    </section>
+        <div class="stat-label">Mood Visibility</div>
+    </div>
 
-    <!-- Why It Matters -->
-    <section class="py-5">
-        <div class="container" data-animate>
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=900&q=80"
-                        alt="Family connection" class="img-fluid rounded-3 shadow">
-                </div>
-                <div class="col-lg-6">
-                    <h2 class="section-title">Why It Matters</h2>
-                    <p>Communication is the foundation of empathy. With The Bridge, adults can share thoughts openly
-                        and be heard leading to healthier emotional well-being and closer family relationships.</p>
-                    <div class="row mt-4">
-                        <div class="col-6 mb-3 text-center">
-                            <div class="stat-number">85%</div>
-                            <div class="stat-label">Improved communication</div>
-                        </div>
-                        <div class="col-6 mb-3 text-center">
-                            <div class="stat-number">72%</div>
-                            <div class="stat-label">Feel more understood</div>
-                        </div>
-                        <div class="col-6 mb-3 text-center">
-                            <div class="stat-number">90%</div>
-                            <div class="stat-label">Find our tools helpful</div>
-                        </div>
-                        <div class="col-6 mb-3 text-center">
-                            <div class="stat-number">78%</div>
-                            <div class="stat-label">Experience less stress</div>
-                        </div>
-                    </div>
+    <div class="col-md-3 mb-3">
+        <div class="stat-number">
+            <span class="counter" data-target="30">0</span>%
+        </div>
+        <div class="stat-label">Reduction in Escalations</div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="stat-number">
+            <span class="counter" data-target="95">0</span>%
+        </div>
+        <div class="stat-label">Staff Satisfaction</div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="stat-number">
+            <span class="counter" data-target="88">0</span>%
+        </div>
+        <div class="stat-label">Improved Documentation</div>
+    </div>
+</div>
+
+    </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+    <div class="container">
+        <h2 class="section-title">Our Clinical Values</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h5>Security & Confidentiality</h5>
+                    <p>
+                        Role-based access and secure data handling aligned with healthcare standards.
+                    </p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Values Section -->
-    <section class="values-section bg-light">
-        <div class="container" data-animate>
-            <h2 class="section-title center text-center mb-5">Our Values</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="value-item">
-                        <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
-                        <h4>Privacy & Safety</h4>
-                        <p>Your data is always secure transparency and protection are at the core of The Bridge.</p>
-                    </div>
+            <div class="col-md-4">
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-hand-holding-medical"></i></div>
+                    <h5>Patient-Centred Care</h5>
+                    <p>
+                        Designed to support neurodivergent individuals within structured clinical environments.
+                    </p>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="value-item">
-                        <div class="value-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                        <h4>Empathy First</h4>
-                        <p>We build with compassion, ensuring every tool supports neurodiverse communication needs.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="value-item">
-                        <div class="value-icon"><i class="fas fa-lightbulb"></i></div>
-                        <h4>Innovation</h4>
-                        <p>Driven by feedback and research, we continuously refine features to make lives easier.</p>
-                    </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-flask"></i></div>
+                    <h5>Evidence-Informed Design</h5>
+                    <p>
+                        Continuously refined through real-world care feedback and structured evaluation.
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Call To Action -->
-    <section class="container" data-animate>
-        <div class="cta-section">
-            <h2 class="mb-4">Ready to Improve Communication?</h2>
-            <p class="fs-5 mb-4">Join The Bridge today and begin building stronger, more understanding relationships.
-            </p>
-           <!-- <a href="register.php" class="btn btn-light-custom">Get Started</a> -->
-        </div>
-    </section>
+<!-- CTA -->
+<section class="container">
+    <div class="cta-section">
+        <h2>Enhance Clinical Communication Today</h2>
+        <p class="fs-5 mt-3">
+            Discover how The Bridge App can support your Hospital, Clinic, supported living service,
+            or clinical team in delivering structured emotional care.
+        </p>
+    </div>
+</section>
 
-   
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
- <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const items = document.querySelectorAll("[data-animate]");
+    const counters = document.querySelectorAll('.counter');
 
+    const animateCounter = (counter) => {
+        const target = +counter.getAttribute('data-target');
+        const speed = 200; // lower = faster
+        const increment = target / speed;
+
+        let count = 0;
+
+        const updateCount = () => {
+            count += increment;
+
+            if (count < target) {
+                counter.innerText = Math.ceil(count);
+                requestAnimationFrame(updateCount);
+            } else {
+                counter.innerText = target;
+            }
+        };
+
+        updateCount();
+    };
+
+    // Trigger animation only when section is visible
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add("active");
+                counters.forEach(counter => {
+                    if (!counter.classList.contains("counted")) {
+                        animateCounter(counter);
+                        counter.classList.add("counted");
+                    }
+                });
             }
         });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.5 });
 
-    items.forEach(item => observer.observe(item));
+    const statsSection = document.querySelector('.stat-number').parentElement.parentElement;
+    observer.observe(statsSection);
+
 });
 </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
