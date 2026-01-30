@@ -5,7 +5,7 @@ include(__DIR__ . "/../includes/worker_header.php");
 $allowed_roles = ['support_worker','nurse','clinician','ward_manager'];
 
 if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $allowed_roles)) {
-    header("Location: /adhd_bridge/login.php");
+    header("Location: /the_bridge/login.php");
     exit;
 }
 require_once __DIR__ . '/../db.connect.php';
@@ -217,9 +217,9 @@ $recentMoodCount = $recentMoods['recent_count'] ?? 0;
                     <h1 class="display-6 fw-bold mb-2">
                         Welcome back, <?= htmlspecialchars($staffName) ?> 👋
                     </h1>
-                    <p class="lead mb-0">
-                        You're managing <strong><?= htmlspecialchars($wardName) ?></strong> ward
-                    </p>
+                  <p class="lead mb-0">
+    You are assigned to <strong><?= htmlspecialchars($wardName) ?></strong> 
+</p>
                 </div>
                 <div class="col-md-4 text-md-end">
                     <span class="ward-badge">
@@ -381,19 +381,19 @@ $recentMoodCount = $recentMoods['recent_count'] ?? 0;
     <div class="d-flex justify-content-end gap-2">
 
         <!-- Go to Patient Mood Dashboard -->
-        <a href="/adhd_bridge/home.php?uid=<?= $patient['id'] ?>" 
+        <a href="/the_bridge/home.php?uid=<?= $patient['id'] ?>" 
            class="btn btn-primary btn-sm action-btn">
             <i class="bi bi-speedometer2 me-1"></i>Dashboard
         </a>
 
         <!-- Open Toolkit for this Patient -->
-        <a href="/adhd_bridge/toolkit.php?uid=<?= $patient['id'] ?>" 
+        <a href="/the_bridge/toolkit.php?uid=<?= $patient['id'] ?>" 
            class="btn btn-success btn-sm action-btn">
             <i class="bi bi-emoji-smile me-1"></i>Enter Mood
         </a>
 
         <!-- Notes (future expansion) -->
-        <a href="/adhd_bridge/chat.php?uid=<?= $patient['id'] ?>" 
+        <a href="/the_bridge/chat.php?uid=<?= $patient['id'] ?>" 
            class="btn btn-outline-secondary btn-sm action-btn">
             <i class="bi bi-journal-text me-1"></i>Notes
         </a>

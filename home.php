@@ -235,9 +235,9 @@ function timeAgo($datetime)
            <!-- LEFT COLUMN - Original Content -->
 <div class="col-lg-4">
     <div class="bg-white p-3 shadow-sm rounded mb-3">
-        <h5><i class="fa-solid fa-comment-dots text-primary"></i> Ready-made Scripts</h5>
+        <h5><i class="fa-solid fa-comment-dots text-primary"></i> Clinical Communication Prompts</h5>
         <ul class="list-group list-group-flush small">
-            <li class="list-group-item"><strong>Need a break</strong><br><small>"I need a short break to
+            <li class="list-group-item"><strong>Patient requires a break</strong><br><small>"I need a short break to
                     refocus. Can we pause for 10 minutes?"</small></li>
             <li class="list-group-item"><strong>Feeling overwhelmed</strong><br><small>"I'm feeling
                     overwhelmed. Can we simplify this to the top 2 tasks?"</small></li>
@@ -249,32 +249,69 @@ function timeAgo($datetime)
         <p class="text-muted small">Use visual countdowns and structured timers to stay focused.</p>
     </div>
 
-    <!--  DYNAMIC RECENT MOODS -->
-    <div class="bg-white p-3 shadow-sm rounded">
-        <h5><i class="fa-solid fa-user-group text-info"></i> Recent moods and notes.</h5>
-        <ul class="list-unstyled mb-0 small">
+   <!-- DYNAMIC RECENT MOODS -->
+<div class="bg-white p-3 shadow-sm rounded">
+    <h5>
+        <i class="fa-solid fa-user-group text-info"></i>
+        Recent Clinical Entries
+    </h5>
 
-            <?php if ($result && $result->num_rows > 0): ?>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <li>
-                        <strong><?= htmlspecialchars($row['user_name'] ?? 'You') ?></strong> —
-                        <?= htmlspecialchars($row['mood']) ?>
+    <ul class="list-unstyled mb-0">
 
-                        <?php if (!empty($row['note'])): ?>
-                            — <?= htmlspecialchars($row['note']) ?>
-                        <?php endif; ?>
+        <?php
+        $stmt = $conn->prepare("
+            SELECT 
+                m.mood,
+                m.note,
+                m.created_at,
+                u.name AS staff_name
+            FROM mood_table m
+            LEFT JOIN users u ON m.worker_id = u.id
+            WHERE m.service_user_id = ?
+            ORDER BY m.created_at DESC
+            LIMIT 1
+        ");
 
-                        <small class="text-muted">
-                            <?= timeAgo($row['created_at']) ?>
-                        </small>
-                    </li>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <li class="text-muted">No recent mood entries.</li>
-            <?php endif; ?>
+        $stmt->bind_param("i", $service_user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        ?>
 
-        </ul>
-    </div>
+        <?php if ($result && $result->num_rows > 0): ?>
+
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <li class="mb-3 pb-2 border-bottom">
+
+                    <div class="fw-semibold text-primary">
+                        Entered by: <?= htmlspecialchars($row['staff_name'] ?? 'Staff') ?>
+                    </div>
+
+                    <div>
+                        <strong>Mood:</strong> 
+                        <?= htmlspecialchars(ucfirst($row['mood'])) ?>
+                    </div>
+
+                    <?php if (!empty($row['note'])): ?>
+                        <div>
+                            <strong>Note:</strong> 
+                            <?= htmlspecialchars($row['note']) ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="text-muted small mt-1">
+                        <?= timeAgo($row['created_at']) ?>
+                    </div>
+
+                </li>
+            <?php endwhile; ?>
+
+        <?php else: ?>
+            <li class="text-muted">No recent clinical entries for this service user.</li>
+        <?php endif; ?>
+
+    </ul>
+</div>
+
 </div>
 
 <!-- RIGHT COLUMN - Professional Charts -->

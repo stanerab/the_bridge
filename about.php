@@ -195,7 +195,7 @@
 
       <!-- Left: Logo + Brand -->
       <div class="d-flex align-items-center gap-2">
-        <a class="navbar-brand d-flex align-items-center" href="">
+        <a class="navbar-brand d-flex align-items-center" href="Admin_test/worker/dashboard.php">
           <!-- SVG Logo -->
           <svg viewBox="0 0 100 100" width="36" height="36" role="img" aria-hidden="true">
             <defs>
@@ -318,7 +318,7 @@
                     <div class="value-item">
                         <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
                         <h4>Privacy & Safety</h4>
-                        <p>Your data is always secure transparency and protection are at the core of ADHD Bridge.</p>
+                        <p>Your data is always secure transparency and protection are at the core of The Bridge.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -343,9 +343,9 @@
     <section class="container" data-animate>
         <div class="cta-section">
             <h2 class="mb-4">Ready to Improve Communication?</h2>
-            <p class="fs-5 mb-4">Join ADHD Bridge today and begin building stronger, more understanding relationships.
+            <p class="fs-5 mb-4">Join The Bridge today and begin building stronger, more understanding relationships.
             </p>
-            <a href="register.php" class="btn btn-light-custom">Get Started</a>
+           <!-- <a href="register.php" class="btn btn-light-custom">Get Started</a> -->
         </div>
     </section>
 

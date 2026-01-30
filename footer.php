@@ -12,7 +12,7 @@ $currentPatientId = $_SESSION['current_patient_id'] ?? null;
         class="fixed-bottom bg-white border-top d-flex justify-content-around py-2 animated-footer">
 
   <!-- Worker Home -->
-  <a href="/adhd_bridge/Admin_test/worker/dashboard.php" class="text-muted text-center">
+  <a href="/the_bridge/Admin_test/worker/dashboard.php" class="text-muted text-center">
     <i class="bi bi-house"></i><br>Home
   </a>
 
