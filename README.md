@@ -119,7 +119,7 @@ Administrators can manage wards, staff assignments, and service user allocations
 
 ## Backend
 
-- CodeIgniter 4 (PHP Framework)
+- PHP CodeIgniter 4 style
 - REST-style API endpoints
 - Role-based authentication
 - Secure database integration
