@@ -2,10 +2,11 @@
 session_start();
 
 // Database connection
-$servername = "localhost";
-$db_username = "root";
-$db_password = "";
-$dbname = "adhdbridge";
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Database connection (uses .env-based config)
+require_once __DIR__ . '/db_connect.php';
 
 $conn = new mysqli($servername, $db_username, $db_password, $dbname);
 if ($conn->connect_error) {

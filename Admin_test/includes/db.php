@@ -1,12 +1,24 @@
 <?php
-// Database connection settings
-$servername = "localhost";
-$username   = "root";        // XAMPP default
-$password   = "";            // XAMPP default (empty password)
-$dbname     = "adhdbridge";  // your database name
-$charset    = "utf8mb4";
+// Load environment variables (env_loader is two levels up at project root)
+require_once __DIR__ . '/../../env_loader.php';
+loadEnv(__DIR__ . '/../../.env');
 
-// Create DSN string
+// Pick credentials based on environment
+$env = $_ENV['APP_ENV'] ?? 'local';
+
+if ($env === 'local') {
+    $servername = $_ENV['DB_LOCAL_HOST'];
+    $username   = $_ENV['DB_LOCAL_USER'];
+    $password   = $_ENV['DB_LOCAL_PASS'];
+    $dbname     = $_ENV['DB_LOCAL_NAME'];
+} else {
+    $servername = $_ENV['DB_PROD_HOST'];
+    $username   = $_ENV['DB_PROD_USER'];
+    $password   = $_ENV['DB_PROD_PASS'];
+    $dbname     = $_ENV['DB_PROD_NAME'];
+}
+
+$charset = "utf8mb4";
 $dsn = "mysql:host=$servername;dbname=$dbname;charset=$charset";
 
 $options = [
@@ -19,4 +31,3 @@ try {
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
-?>

@@ -25,28 +25,13 @@ if ($service_user_id <= 0) {
 $_SESSION['current_patient_id'] = $service_user_id;
 
 
-// Enable debugging (remove in production)
+
+// Enable debugging 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Auto-detect Localhost vs Live
-if (in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1', '::1'])) {
-    $host = "localhost";
-    $user = "root";
-    $pass = "";
-    $db   = "adhdbridge";
-} else {
-    $host = "sql100.infinityfree.com";
-    $user = "if0_40168601";
-    $pass = "Stanleyson00"; 
-    $db   = "if0_40168601_adhdbridge";
-}
-
-// Connect DB
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) {
-    die("DB Connection failed: " . $conn->connect_error);
-}
+// Database connection (uses .env-based config)
+require_once __DIR__ . '/db_connect.php';
 
 // --- DEFAULT RESULT ---
 $result = null;
@@ -377,7 +362,6 @@ function timeAgo($datetime)
         </div>
     </div>
 <?php
-include_once('connection.php');
 $mysqli = $conn;
 
 if ($mysqli->connect_error) {
