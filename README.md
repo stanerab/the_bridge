@@ -1,8 +1,8 @@
-The Bridge
+# The Bridge
 
-A Clinical Communication & Emotional Monitoring Platform
+## A Clinical Communication & Emotional Monitoring Platform
 
-Overview
+## Overview
 
 The Bridge is a secure web and mobile application designed to support structured emotional monitoring and communication within hospital wards, supported living environments, and community care settings.
 
@@ -10,130 +10,163 @@ The platform enables staff to record mood observations, document clinical notes,
 
 The goal is to:
 
-Improve emotional visibility
+- Improve emotional visibility
+- Reduce communication breakdown
+- Support clinical documentation
+- Enhance continuity of care
 
-Reduce communication breakdown
+The Bridge provides a structured and professional framework for tracking emotional wellbeing within clinical and supported care environments.
 
-Support clinical documentation
+---
 
-Enhance continuity of care
+# Core Clinical Features
 
-The Bridge provides a structured, professional framework for tracking emotional wellbeing within care environments.
-
-Core Clinical Features
-🧠 Structured Mood Monitoring
+## 🧠 Structured Mood Monitoring
 
 Staff can record and monitor service user mood states over time, supporting:
 
-Behavioural trend analysis
+- Behavioural trend analysis
+- Early identification of emotional deterioration
+- Improved MDT discussions
+- Care planning support
 
-Early identification of emotional deterioration
+Visual dashboards provide weekly and monthly summaries to support clinical decision-making and emotional trend monitoring.
 
-Improved MDT discussions
+---
 
-Care planning support
-
-Visual dashboards provide weekly and monthly summaries to aid clinical decision-making.
-
-📝 Clinical Notes & Observations
+## 📝 Clinical Notes & Observations
 
 Secure documentation of:
 
-Emotional observations
+- Emotional observations
+- Behavioural notes
+- Support interventions
+- Ward-based updates
+- Daily clinical interactions
 
-Behavioural notes
+All entries are timestamped and linked to the recording staff member to maintain accountability, transparency, and audit readiness.
 
-Support interventions
+---
 
-Ward-based updates
+## 👨‍⚕️ Staff & Service User Management
 
-All entries are timestamped and linked to the recording staff member to maintain accountability and audit trails.
+Administrators can:
 
-🏥 Ward & Supported Living Management
+- Create and manage staff accounts
+- Create and allocate service users
+- Assign staff to specific wards
+- Manage staff roles and permissions
+- Edit or archive user records
+- Monitor ward allocations and activity
+
+The system supports role-based access control for administrators, nurses, support workers, and care staff.
+
+---
+
+## 📊 Reporting, Auditing & Data Export
+
+The Bridge includes reporting and auditing tools designed to support clinical governance and operational oversight.
+
+Features include:
+
+- Weekly and monthly mood trend reporting
+- Mood frequency analysis
+- Service user activity tracking
+- Staff activity monitoring
+- Timestamped audit logs
+- Clinical note tracking
+- Ward activity summaries
+- Exportable CSV reports for audits and clinical review
+
+Audit functionality helps maintain accountability by recording system activity, staff actions, and service user interactions throughout the platform.
+
+---
+
+## 🏥 Ward & Supported Living Management
 
 Designed for:
 
-Hospital wards
+- Hospital wards
+- Supported living settings
+- Community mental health services
+- Residential care facilities
 
-Supported living settings
+Administrators can manage wards, staff assignments, and service user allocations through a central dashboard interface.
 
-Community mental health services
+---
 
-Residential care facilities
+## 🔐 Secure Data Handling
 
-Administrators can manage wards, staff roles, and service user allocations.
+- Role-based access control (Admin / Staff)
+- Secure authentication system
+- Database-backed storage using MySQL
+- Structured data relationships
+- Designed with GDPR principles in mind
+- Audit-ready data structure
 
-🔐 Secure Data Handling
+---
 
-Role-based access control (Admin / Staff)
+## 📱 Cross-Platform Accessibility
 
-Secure authentication
+- Web-based dashboard for administrators and staff
+- Mobile application for on-the-go documentation
+- Responsive clinical dashboard interface
+- Secure backend integration
 
-Database-backed storage (MySQL)
+---
 
-Designed with GDPR principles in mind
+# Technical Architecture
 
-📊 Reporting & Insights
+## Backend
 
-Weekly mood distribution
+- CodeIgniter 4 (PHP Framework)
+- REST-style API endpoints
+- Role-based authentication
+- Secure database integration
 
-Trend visualisation
+## Frontend (Web)
 
-Staff-entered mood frequency tracking
+- HTML5
+- Bootstrap 5
+- JavaScript
+- jQuery
+- Chart.js for analytics and visualisation
 
-Exportable reports for clinical review
+## Database
 
-📱 Cross-Platform Accessibility
+- MySQL relational database
+- Audit-ready schema
+- Structured ward and service user relationships
+- Dynamic CRUD operations
 
-Web-based dashboard for staff
+## Mobile Application
 
-Mobile app for on-the-go documentation
+- Flutter
+- Integrated with CodeIgniter backend API
+- Android-ready architecture
+- Expandable to iOS deployment
 
-Secure backend integration
+---
 
-Technical Architecture
-Backend
+# Designed For
 
-CodeIgniter 4 (PHP Framework)
+- Mental health wards
+- ADHD & neurodevelopmental services
+- Supported living environments
+- Community mental health teams
+- Residential care settings
+- Care coordinators & clinical managers
 
-REST-style endpoints
+---
 
-Role-based authentication
+# Live Demo
 
-Frontend (Web)
+Admin Portal Demo Available
 
-HTML5
 
-Bootstrap 5
 
-jQuery
+---
 
-Chart.js for visualisation
+# Author
 
-Database
-
-MySQL (relational structure)
-
-Audit-ready schema
-
-Structured ward/service user relationships
-
-Mobile Application
-
-Flutter
-
-Integrated with CodeIgniter backend API
-
-Android-ready (expandable to iOS)
-
-Designed For
-
-Mental health wards
-
-ADHD & neurodevelopmental services
-
-Supported living environments
-
-Community mental health teams
-
-Care coordinators & clinical managers
+Stanley Erhabor
