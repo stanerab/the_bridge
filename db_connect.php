@@ -20,11 +20,11 @@ if ($isLocal) {
     $password = "";
     $dbname = "adhdbridge";
 } else {
-    // InfinityFree database
-    $servername = "sql100.infinityfree.com";
-    $username = "if0_40168601";
-    $password = "Stanley00";
-    $dbname = "if0_40168601_adhdbridge";
+    // Production database — credentials stored in environment, not in source
+    $servername = "REMOVED";
+    $username = "REMOVED";
+    $password = "REMOVED";
+    $dbname = "REMOVED";
 }
 
 // Create connection
