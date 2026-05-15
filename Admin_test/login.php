@@ -113,7 +113,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             border-radius: 12px;
             transition: 0.3s ease;
         }
+/* Demo credentials box */
+.demo-box {
+    border: 1px dashed var(--input-border);
+    border-radius: 10px;
+    padding: 14px;
+    background: rgba(111, 66, 193, 0.05);
+}
 
+.theme-dark .demo-box {
+    background: rgba(255, 217, 116, 0.06);
+    border-color: rgba(255, 217, 116, 0.3);
+}
+
+.demo-header {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6f42c1;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.theme-dark .demo-header {
+    color: var(--accent);
+}
+
+.demo-creds {
+    font-size: 0.85rem;
+    color: var(--card-text);
+    opacity: 0.85;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    line-height: 1.6;
+}
         .btn-login:hover {
             background: #5a32a3;
             transform: translateY(-2px);
@@ -190,7 +223,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </button>
 
                 </form>
-
+<!-- Demo Credentials -->
+<div class="demo-box mt-3">
+    <div class="demo-header">
+        <i class="bi bi-stars"></i> Use the below demo details to login
+    </div>
+    <div class="demo-creds">
+        <div><strong>Email:</strong> admin@example.com</div>
+        <div><strong>Password:</strong> changeThis123</div>
+    </div>
+</div>
                 <div class="text-center mt-3">
                     <small class="text-muted">
                         Secure clinical access • Encrypted session
