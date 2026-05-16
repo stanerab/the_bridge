@@ -2,6 +2,8 @@
 
 ## A Clinical Communication & Emotional Monitoring Platform
 
+live: https://the-bridge.blueprintcaretech.com/Admin_test/login.php
+
 ## Overview
 
 The Bridge is a secure web and mobile application designed to support structured emotional monitoring and communication within hospital wards, supported living environments, and community care settings.
